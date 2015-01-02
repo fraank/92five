@@ -1,4 +1,3 @@
-<a href="javascript:void(0)" class="sidebar_switch" title="Hide Sidebar">{{trans('92five.Sidebar switch')}}</a>
 <div class="sidebar">
   <div class="antiScroll">
     <div class="antiscroll-inner">
@@ -6,8 +5,12 @@
         <div class="sidebar_inner">
           <div class="login_info">
             <div class="user_info_data"> <img src="{{url('assets/images/profilepics/')}}/{{Sentry::getUser()->id}}.png" class="user_image" alt="">
-              <h4>Hey {{Sentry::getUser()->first_name}}!</h4>
-            <span>{{ App::make('date')}}</span> </div>
+              <h4>Hey {{Sentry::getUser()->first_name}}!</a></h4>
+              <span>
+                <a href="{{url('/dashboard/me')}}">Account</a> | 
+                <a href="{{URL::to('/logout')}}">Logout</a>
+              </span>
+            </div>
           </div>
           <div id="side_accordion" class="accordion">
             <div class="accordion-group none_accrodion">

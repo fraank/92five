@@ -5,6 +5,14 @@
 @section('content')
 <div id="contentwrapper">
     <div class="main_content">
+      <div class="row-fluid project_detail start">
+        <h2>
+          <div class="pull-right">
+          {{ App::make('date')}}
+          </div>
+          <a href="{{url('/dashboard')}}">Dashboard</a>
+        </h2>
+      </div>
       <div class="row-fluid">
         <div class="span12 right_part">
           <div class="row-fluid">
@@ -37,7 +45,7 @@
                             <div class="row-fluid detail_proje">
                           <div class="span12 scroll_detail">
                             <h4><a href={{url('/dashboard/projects',array($project['id']))}}>{{$project['project_name']}}</a></h4>
-                            <div class="row-fluid"> 
+                            <div class="row-fluid">
                                @if($project['total_task'] != 0)
                                 <span class="span6 p_detail_3">({{$project['remainingTasks']}} {{trans('92five.tasksRemaining')}})</span>
                                 <span class="span6 p_detail_4">
@@ -78,15 +86,15 @@
                     <div class="span6 detail_box">
                       <h3>
                         <span class="add_task_icon"></span>
-                          {{trans('92five.todoList')}}                       
+                          {{trans('92five.todoList')}}
 					             </h3>
                     <div class="scroll_container">
                       <div class="my-list">
                         <div class="content_3" id="todoslist" name="todos">
                           <ul id='todos' name="todos">
                           <li class="no_todolist_item">
-                        {{trans('92five.noToDoText')}} !                       
-                          </li>  
+                        {{trans('92five.noToDoText')}} !
+                          </li>
                           </ul>
                         </div>
                       </div>
@@ -100,7 +108,7 @@
                     <div class="today-agenda">
                         @if($events != null)
                         @foreach($events as $event)
-                      <div class="blue-disc from-{{$event['fromClass']}} to-{{$event['toClass']}}">{{date('g:ia', strtotime($event['start_time']))}} - {{date('g:ia', strtotime($event['end_time']))}} <br/><a href="{{url('dashboard/calendar')}}"> {{$event['title']}}</a> </div> 
+                      <div class="blue-disc from-{{$event['fromClass']}} to-{{$event['toClass']}}">{{date('g:ia', strtotime($event['start_time']))}} - {{date('g:ia', strtotime($event['end_time']))}} <br/><a href="{{url('dashboard/calendar')}}"> {{$event['title']}}</a> </div>
                         @endforeach
                         @endif
                       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="today-agenda-box">
@@ -179,7 +187,7 @@
                     <div class="span1"></div>
                     <div class="notetext span11">
                       <div class="heading">
-                        <h2> {{trans('92five.quickNote')}}</h2> 
+                        <h2> {{trans('92five.quickNote')}}</h2>
                       </div>
                       <div class="span11" id='notediv' name='notediv'>
                         <textarea id="note" name="note" ></textarea>
@@ -200,4 +208,3 @@
 {{ HTML::script('assets/js/dashboard/quicknote.js') }}
 {{ HTML::script('assets/js/dashboard/taskcompleted.js') }}
   @stop
-

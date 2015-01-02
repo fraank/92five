@@ -55,7 +55,7 @@ header {
 .top_menu_1 {
 	float:right !important;
 	/*margin-left:160px !important;*/
-	margin-left:30px !important;
+	margin-left: 30px !important;
 	font-family:'Lato_reg';
 }
 .top_menu_1 .navbar-inverse .brand, .navbar-inverse .nav > li > a{font-family:'Lato_reg';}
@@ -101,8 +101,8 @@ header {
 section {
 	width:100%;
 	float:left;
-	margin:57px 0 0 0;
-	padding:0px;
+	margin: 10px 0 0 0;
+	padding:0;
 }
 /************ Left Part **************/
 .left_part {
@@ -618,7 +618,8 @@ textarea {
 /****************** Project Page ******************/
 #Grid .mix{opacity: 0;display: none;}
 .project_bg{ background:#f2f2f2 !important;}
-.project_detail{ font-family:'Lato_lig'; min-height: 650px !important;} 
+.project_detail{ font-family:'Lato_lig'; min-height: 650px !important;}
+.project_detail.start{ min-height: 20px !important;}
 .project_detail h2{ padding:0 10px; margin:0 0 10px 0; font-size:18px; color:#14b9d6; font-weight:normal; background:#2e3641;}
 .project_details h2 a {text-decoration: none; color:#14b9d6 !important;}
 .project_detail h2 a:hover{text-decoration: none; color: #14b9d6 !important;}
@@ -1142,7 +1143,7 @@ ul.task_list li a:hover{ text-decoration:none; color:#000000;}
     line-height: 36px;
     font-family: 'Lato_reg';
 }
-.wrapper-dropdown-5:after { 
+.wrapper-dropdown-5:after {
 }
 .wrapper-dropdown-5 .dropdown {
     /* Size & position */
@@ -1625,7 +1626,7 @@ ul.test_sub_task li{ width:100%; float:left; padding:0; margin:0 0 7px 0; list-s
 ul.test_sub_task a{ float:left; padding:0 0 0 27px; margin:0; font-size:17px; color:#000000; background:url(../../images/dashboard/nocheckgreenround.png) no-repeat left 0;}
 ul.test_sub_task a:hover{ text-decoration:none;}
 .sub_task_select{ color:#d3d1d1 !important; text-decoration:line-through; background:url(../../images/dashboard/checkgreenround.png) no-repeat left 0 !important;}
-.sub_task_select:hover{ text-decoration:line-through !important;} 
+.sub_task_select:hover{ text-decoration:line-through !important;}
 .proj_start{ width:100%; float:left; padding:0; margin:0 0 12px 0; font-size:17px; color:#000000;}
 .proj_start strong{ float:left; color:#000000; margin:0 5px 0 0; width:105px; font-family: 'Lato_reg';}
 .asignee_sec .view-upload{ margin-left:0;}

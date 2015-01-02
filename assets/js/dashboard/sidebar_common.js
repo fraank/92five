@@ -11,9 +11,9 @@ $(document).ready(function() {
             }
         }
     });
-    sidebar.start();
-    sidebar.make_scroll();
-    sidebar.update_scroll();
+    //sidebar.start();
+    //sidebar.make_scroll();
+    //sidebar.update_scroll();
 });
 
 sidebar = {

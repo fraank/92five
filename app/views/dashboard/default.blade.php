@@ -29,15 +29,11 @@
 {{ HTML::script('assets/js/notifications/iosOverlay.js') }}
 </head>
 <body class="project_bg">
-<!-- Header -->
-@include('dashboard.layouts.header')
-<!-- Header -->
 <!-- Section -->
 <section>
   <!-- main content -->
     @yield('content')
   <!-- sidebar starts -->
-  @include('dashboard.layouts.footer')
   @include('dashboard.layouts.sidebar')
   <!-- sidebar ends -->
 </section>
