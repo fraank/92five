@@ -7,16 +7,17 @@ return array(
   'fp.button' => 'Recover',
   'fp.text1' => 'I am just kidding. Take me',
   'fp.loginlink' => 'login',
-  'fp.text2' => 'page',   
-/* Recover Password */  
+  'fp.text2' => 'page',
+/* Recover Password */
    'rp.header' => 'Looks like someone had a hard time remembering password !',
    'rp.boxtitle' => 'Reset Password',
-   'rp.boxtext'  => 'Please enter your new password. Minimum 9 letters with combination of numbers and alphabets. 
+   'rp.boxtext'  => 'Please enter your new password. Minimum 9 letters with combination of numbers and alphabets.
 Keep typing till the bar turns green !',
    'rp.newPasswordLabel' => 'New Password',
    'rp.confirmPasswordLabel' => 'Confirm Password',
    'rp.emailLabel' => 'E-mail',
 /***************Navigation Menu **************/
+  'Sidebar switch' => 'Sidebar switch',
   'Dashboard' => 'Dashboard',
   'Projects' => 'Projects',
   'Tasks' => 'Tasks',

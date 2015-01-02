@@ -7,8 +7,8 @@ return array(
   'fp.button' => 'Recover',
   'fp.text1' => 'I am just kidding. Take me',
   'fp.loginlink' => 'Connexion',
-  'fp.text2' => 'page',   
-/* Recover Password */  
+  'fp.text2' => 'page',
+/* Recover Password */
    'rp.header' => 'Looks like someone had a hard time remembering password !',
    'rp.boxtitle' => 'Mot de passe oublié',
    'rp.boxtext'  => 'Veuillez entrée votre nouveau mot de passe. Minimum de 9 lettres avec une combinaison de chiffre et de lettre',
@@ -16,6 +16,7 @@ return array(
    'rp.confirmPasswordLabel' => 'Confirm Password',
    'rp.emailLabel' => 'E-mail',
 /***************Navigation Menu **************/
+  'Sidebar switch' => 'Sidebar switch',
   'Dashboard' => 'Tableau de bord',
   'Projects' => 'Projets',
   'Tasks' => 'Tâches',

@@ -20,6 +20,10 @@
                       <input id="date" name="date" type="text" class="span12 pull-left" value="{{new ExpressiveDate($event[0]['date'])}}" placeholder="When" data-required="true" data-show-errors="false">
                       <input id="starttime" name="starttime" type="text" class="span6 pull-left" value="{{date('g:iA', strtotime($event[0]['start_time']))}}" placeholder="From" data-required="true" data-show-errors="false"> -
                       <input id="endtime" name="endtime" type="text" class="span6 pull-right" value="{{date('g:iA', strtotime($event[0]['end_time']))}}" placeholder="Till" data-required="true" data-show-errors="false">
+
+                      <label for="allday">All day event?</label>
+                      <input id="allday" name="allday" type="checkbox">
+
                     </div>
                     <div class="control-group">
                       <label class="control-label" for="passwordinput">Category:</label>
