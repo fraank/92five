@@ -1,4 +1,19 @@
+## team - project management ##
+
+Additional Features:
+
+* german language
+* "allday" Events for the calendar
+
+
+Bugfixes:
+
+* full migration support (basic run needs no installation)
+* replaced hard strings with translated content
+
+
 Before proceeding to installation please make sure that your server meets the minimum server requirements:
+
 
 ## Minimum Server Requirements ##
 
@@ -10,14 +25,15 @@ Before proceeding to installation please make sure that your server meets the mi
 
 If your webserver is running Apache then mod_rewrite should be installed
 
-# Installation #
 
-* Please make sure that directory / sub-directory in which you are installing the application is empty
-* Download the Zip Archive from [here](http://92fiveapp.com/download)
-* Unzip the archive to the prepared directory
-* Grant writing permission to app/storage, assets/uploads and assets/images/profilepics, app/config/app.php, app/config/database.php, app/config/92five.php and app/config/mail.php
-* Navigate to the /install to start the wizard and follow the instruction
+# Manual Installation #
 
-# For any help / queries / errors please visit [forums.92fiveapp.com](http://forums.92fiveapp.com) #
+* git clone the repository
+* copy the app/config/database.sample.php to app/config/database.php and modify the db-settings
+* Grant writing permission to app/storage, assets/uploads and assets/images/profilepics
+* run "php artisan optimize"
+* run "php artisan migrate" to setup the full db
+* thats it! You can now login with the user "admin@admin.com" and "changeme12345"
 
-Run on Terminal <a href="https://www.terminal.com/tiny/UUfZvWota2" target="_blank"><img alt="Run on Terminal" src="https://www.terminal.com/run-on-terminal-2x.png" /></a>
+
+team is fork from 92five (https://github.com/chintanbanugaria/92five)
