@@ -292,8 +292,8 @@ Schema::create('users', function($table) {
 // NOTE -- users_groups
 // --------------------------------------------------
 Schema::create('users_groups', function($table) {
- $table->increments('user_id')->unsigned();
- $table->increments('group_id')->unsigned();
+ $table->unsignedInteger('user_id')->unsigned();
+ $table->unsignedInteger('group_id')->unsigned();
  });
 
 
@@ -389,14 +389,6 @@ Schema::drop('timesheet');
 Schema::drop('todos');
 Schema::drop('user_profile');
 Schema::drop('users');
-Schema::drop('users_groups');
-Schema::drop('users_groups');
-Schema::drop('users_groups');
-Schema::drop('users_groups');
-Schema::drop('users_groups');
-Schema::drop('users_groups');
-Schema::drop('users_groups');
-Schema::drop('users_groups');
 Schema::drop('users_groups');
 
 }

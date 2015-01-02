@@ -2,7 +2,7 @@
 app/config/database.php
 
 # assets‚
-assets/images/profilepics/
+# assets/images/profilepics/
 
 # precompiled things
 # run php artisan optimize to generate these files:
