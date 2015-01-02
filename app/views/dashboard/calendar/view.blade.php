@@ -7,7 +7,7 @@
   <div class="main_content">
     <div class="row-fluid">
       <div class="span12 project_detail">
-        <h2><a href="{{url('/dashboard')}}">Dashboard</a> / Calendar</h2>
+        <h2><a href="{{url('/dashboard')}}">{{trans('92five.Dashboard')}}</a> / {{trans('92five.Calendar')}}</h2>
         <div class="add_project_main">
           <a data-toggle="modal" href="{{url('/dashboard/calendar/event/createdbyme')}}" class="add_project pull-right"> Events Created by Me</a>
           <a data-toggle="modal" href="#myModal" class="add_project add-last"> + Add Event</a>
@@ -25,7 +25,14 @@
               @if(sizeof($events) != 0)
               @foreach($events as $event)
               <div class="row-fluid">
-                <div class="span5 time_listing_1">{{date('g:ia', strtotime($event['start_time']))}} - {{date('g:ia', strtotime($event['end_time']))}} </div>
+                <div class="span5 time_listing_1">
+                  @if($event['allday'])
+                    allday
+                  @else
+                    {{date('g:ia', strtotime($event['start_time']))}} - {{date('g:ia', strtotime($event['end_time']))}}
+                  @endif
+                </div>
+
                 <div class="span7 time_listing_1"><a data-toggle="modal" class="cal_event_title"  data-placement="right"  eventid={{$event['id']}} href="#myModal4">{{$event['title']}}</a></div>
               </div>
               <div class="calender-viewevent hide">
@@ -90,101 +97,15 @@
               </div>
             </div>
             </script>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- Add Event Popup -->
-<div id="myModal" class="modal hide fade cal_light_box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form class="form-horizontal" action='calendar/add' method='post' id="addevent" data-validate="parsley">
-    <div class="modal-header form_modal_header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">
-      <input type="text" name="title" id="title" class="popup_title_input" placeholder="Title" data-required="true"  data-show-errors="false" >
-      </h3>
-    </div>
-    <div class="modal-body">
-      <div class="popup_event">
-        <div class="add-proj-form">
-          <fieldset>
-            <div class="row-fluid">
-              <div class="control-group">
-                <div class="row-fluid">
-                  <input id="date" name="date" type="text" class="span6 pull-left" placeholder="When" data-required="true"  data-show-errors="true">
-                  <input id="starttime" name="starttime" type="text" class="span3 pull-left" placeholder="From" data-required="true"  data-show-errors="true">
-                  <input id="endtime" name="endtime" type="text" class="span3 pull-left" placeholder="Till" data-required="true"  data-show-errors="true">
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="passwordinput">Category:</label>
-                <div class="controls">
-                  <div class="task_select">
-                    <select name="category" id="category" tabindex="1" style="width:270px;" data-required="true"  data-show-errors="false">
-                      <option name="" value="" selected="selected" title="">Select Category</option>
-                      <option  name="" value="Meeting - General" title="">Meeting - General</option>
-                      <option  name="" value="Meeting - Project" title="">Meeting - Project</option>
-                      <option  name="" value="Meeting - Task" title="">Meeting - Task</option>
-                      <option  name="" value="Deliverer" title="">Deliverer</option>
-                      <option  name="" value="Client" title="">Client</option>
-                      <option  name="" value="Others" title="">Others</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="passwordinput">Note:</label>
-                <div class="controls">
-                  <textarea  name="note" id="note" class="add-proj-form-t" placeholder="Note"></textarea>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="passwordinput">People:<span class="tooltipster-icon" title="To add the people start typing the name and select the appropriate user from the list. Please note that only those name will appear in list who are registered in the app. Please add your name as well if you are one of them.">(?)</span></label>
-                <div class="controls">
-                  <input id="plugin" name="passwordinput" type="text" placeholder="Add Name">
-                </div>
-                <div id="selected">
-                  <ul id="list">
-                  </ul>
-                  <input style="display: none;" name="tagsinput" id="tagsinput" class="tagsinput" placeholder="Add Name" value=""/>
-                  <p></p>
-                </div>
-              </div>
-              <div class="advanced_link"><a href="#" id="adv">Advanced</a></div>
-            </div>
-            <div id="advanced-inputs">
-              <div class="row-fluid event_form_data">
-                <div class="control-group">
-                  <label class="control-label" for="passwordinput">Location:</label>
-                  <div class="controls">
-                    <input id="location" name="location" type="text" placeholder="Location">
-                  </div>
-                </div>
-              </div>
-            </div>
-          <button class="submit pull-right">Submit</a></button>
-        </fieldset>
-      </div>
-    </div>
-  </div>
-</form>
-</div>
-<!-- End Add Event Popup -->
-<!-- Delete Event Popup -->
-<div id="myModal-item-delete" class="modal cal_light_box hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Really ?</h3>
-  </div>
-  <div class="modal-body">
-    <div class="confirm-delete">Confirm delete the event?</div>
-    <div class="confirm-button">
-      <form method="post" action="calendar/event/delete">  <input type="hidden" name="deleteEventId" id="deleteEventId" value=  > <button class="submit">Yes please.</a></button></form>
-    <button class="submit dontdelete" id="dontdelete" >No Thanks.</a></button></div>
-  </div>
-</div>
-<!-- End Delete Event Popup-->
+
+@include('dashboard/calendar/shared/add_event')
+@include('dashboard/calendar/shared/delete_event')
 
 @if(Session::has('status') and Session::has('message') )
 @if(Session::has('status') == 'success')
@@ -254,7 +175,7 @@ $(document).ready(function() {
     clickEvents: {
       click: function(e) {
         // console.log($(e.element).hasClass("event"));
-        if ($(e.element).hasClass("event")) 
+        if ($(e.element).hasClass("event"))
         {
           var tempclass = $(e.element).attr("class");
           var finaldate = tempclass.split('day-')[1];
@@ -266,7 +187,7 @@ $(document).ready(function() {
           });
           eventsView.render();
 
-        } else 
+        } else
         {
 
           //User has clicked a day in which no event is there
@@ -349,6 +270,22 @@ to_picker.on('set', function(event) {
     from_picker.set('max', to_picker.get('select'));
   }
 });
+
+var check_allday = function() {
+  if( $('#allday').is(':checked')) {
+    $('#timeselect').hide();
+    $('#starttime').data('required', 'false');
+    $('#endtime').data('required', 'false');
+  } else {
+    $('#timeselect').show();
+    $('#starttime').data('required', 'true');
+    $('#endtime').data('required', 'true');
+  }
+}
+
+$('#allday').change(function(){
+  check_allday();
+});
+
 </script>
   @stop
-

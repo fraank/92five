@@ -18,12 +18,19 @@
                   <fieldset>
                     <div class="control-group">
                       <input id="date" name="date" type="text" class="span12 pull-left" value="{{new ExpressiveDate($event[0]['date'])}}" placeholder="When" data-required="true" data-show-errors="false">
+                      <div  id="timeselect">
                       <input id="starttime" name="starttime" type="text" class="span6 pull-left" value="{{date('g:iA', strtotime($event[0]['start_time']))}}" placeholder="From" data-required="true" data-show-errors="false"> -
                       <input id="endtime" name="endtime" type="text" class="span6 pull-right" value="{{date('g:iA', strtotime($event[0]['end_time']))}}" placeholder="Till" data-required="true" data-show-errors="false">
-
+                      </div>
+                    </div>
+                    <div class="control-group">
                       <label for="allday">All day event?</label>
-                      <input id="allday" name="allday" type="checkbox">
-
+                      <input type="hidden" name="allday" value="0"/>
+                      @if ( $event[0]['allday'] == true )
+                        <input id="allday" name="allday" type="checkbox" checked="checked" />
+                      @else
+                        <input id="allday" name="allday" type="checkbox" />
+                      @endif
                     </div>
                     <div class="control-group">
                       <label class="control-label" for="passwordinput">Category:</label>
@@ -154,6 +161,7 @@
  });
  $(document).ready(function() {
    $('.tooltipster-icon').tooltipster();
+   check_allday();
  });
 </script>
 {{ HTML::style('assets/css/dashboard/pickadate.css') }}
@@ -175,6 +183,23 @@
  $('#date').pickadate({
    formatSubmit: 'yyyy-mm-dd'
  });
+
+ var check_allday = function() {
+   if( $('#allday').is(':checked')) {
+     $('#timeselect').hide();
+     $('#starttime').data('required', 'false');
+     $('#endtime').data('required', 'false');
+   } else {
+     $('#timeselect').show();
+     $('#starttime').data('required', 'true');
+     $('#endtime').data('required', 'true');
+   }
+ }
+
+ $('#allday').change(function(){
+   check_allday();
+ });
+
  var from_$input = $('#starttime').pickatime({
    min: [7, 00],
    max: [21, 0],
@@ -217,4 +242,4 @@
    }
  });
 </script>
-  @stop
+@stop

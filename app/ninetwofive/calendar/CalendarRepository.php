@@ -1,8 +1,8 @@
-<?php 
+<?php
 use \Exception as Exception;
 use \SomeThingWentWrongException as SomeThingWentWrongException;
 /**
- * Calendar Repository.    
+ * Calendar Repository.
  * @version    1.0.0
  * @author     Chintan Banugaria
  * @copyright  (c) 2014, 92fiveapp
@@ -12,7 +12,7 @@ use \SomeThingWentWrongException as SomeThingWentWrongException;
 
 class CalendarRepository implements CalendarInterface{
 
-	
+
 	public function addEvent($data,$createdUserId)
 	{
 		try
@@ -22,17 +22,34 @@ class CalendarRepository implements CalendarInterface{
 			$calendar->title = $data['title'];
 			$calendar->category = $data['category'];
 			$calendar->date = $data['date_submit'];
-			$calendar->start_time = $data['starttime_submit'];
-			$calendar->end_time = $data['endtime_submit'];
 			$calendar->notes = $data['note'];
 			$calendar->location = $data['location'];
+
+			if(empty($data['allday']))
+				$calendar->allday = false;
+			else
+				$calendar->allday = true;
+
+			if($data['starttime_submit'] != '') {
+				$calendar->start_time = $data['starttime_submit'];
+			} else if ($calendar->allday == true) {
+				$calendar->start_time = '00:00:00';
+			}
+
+			if($data['endtime_submit'] != '') {
+				$calendar->end_time = $data['endtime_submit'];
+			} else if ($calendar->allday == true) {
+				$calendar->end_time = '23:59:59';
+			}
+
+
 			$calendar->updated_by = $createdUserId;
 			//Save the model
 			$calendar->save();
 			$emails =  preg_split("/[\s,]+/", $data['tagsinput']);
 			$usersId = \User::whereIn('email',$emails)->lists('id');
 			//Add collaborators
-			foreach ($usersId as $userId) 
+			foreach ($usersId as $userId)
 			{
 					$eventCollabs = new \EventUser;
 					$eventCollabs->events_id = $calendar->id;
@@ -52,14 +69,14 @@ class CalendarRepository implements CalendarInterface{
 	public function getEvents($userId, $day)
 	{
 		try
-		{	
+		{
 			$finalevents = array();
 			$eventsId = \EventUser::where('user_id',$userId)->lists('events_id');
 			if(sizeof($eventsId) != 0)
 			{
-			$events = \Events::whereIn('id',$eventsId)->where('date',$day)->orderBy('start_time')->get(array('id','title','start_time','end_time','category','notes','location','updated_by'))->toArray();
+			$events = \Events::whereIn('id',$eventsId)->where('date',$day)->orderBy('start_time')->get(array('id','title','start_time','end_time','category','notes','location','updated_by', 'allday'))->toArray();
 			foreach ($events as $event) {
-				
+
 				$users = \Events::find($event['id'])->users()->orderBy('first_name')->get()->toArray();
 				$event['users'] = $users;
 				if($event['updated_by'] == $userId)
@@ -74,7 +91,7 @@ class CalendarRepository implements CalendarInterface{
 				$finalevents[] = $event;
 			}
 
-			//Log::info(json_encode($finalevents));	
+			//Log::info(json_encode($finalevents));
 			return $finalevents;
 			}
 			else
@@ -91,7 +108,7 @@ class CalendarRepository implements CalendarInterface{
 	public function checkPermission($eventId,$userId)
 	{
 		try
-		{	
+		{
 			$event = \Events::find($eventId);
 			if($event->updated_by == $userId)
 			{
@@ -109,18 +126,18 @@ class CalendarRepository implements CalendarInterface{
 	}
 	public function getEventDates($userId)
 	{
-		
+
 		$eventsId = \EventUser::where('user_id',$userId)->lists('events_id');
 		if(sizeof($eventsId) !=0)
 		{
 		$eventDates =  \Events::whereIn('id',$eventsId)->get(array('date'))->toJson();
-		return $eventDates;	
+		return $eventDates;
 		}
 		else
 		{
 			return json_encode([]);
 		}
-		
+
 	}
 
 	public function getEvent($id)
@@ -137,7 +154,7 @@ class CalendarRepository implements CalendarInterface{
 			\Log::error("Something Went Wrong in Calendar Repository - getEvent():".$e->getMessage());
 		}
 	}
-	
+
 	public function deleteEvent($id,$userId)
 	{
 		try{
@@ -158,39 +175,49 @@ class CalendarRepository implements CalendarInterface{
 	}
 	public function editEvent($data, $updatedUserId)
 	{
-		
 		try
 		{
 			$event = \Events::find($data['eventid']);
 			$event->title = $data['title'];
 			$event->category = $data['category'];
-            $tempDate =\DateTime::createFromFormat('j F, Y',$data['date']);
-            $event->date =  $tempDate->format('Y-m-d');
-			if($data['starttime_submit'] != '')
-			{
+      $tempDate =\DateTime::createFromFormat('j F, Y',$data['date']);
+      $event->date =  $tempDate->format('Y-m-d');
+
+			if(empty($data['allday']))
+				$event->allday = false;
+			else
+				$event->allday = true;
+
+			if($data['starttime_submit'] != '') {
 				$event->start_time = $data['starttime_submit'];
+			} else if ($event->allday == true && !empty($event->start_time)) {
+				$event->start_time = $tempDate->format('00:00:00');
 			}
-			if($data['endtime_submit'] != '')
-			{
+
+			if($data['endtime_submit'] != '') {
 				$event->end_time = $data['endtime_submit'];
+			} else if ($event->allday == true && !empty($event->end_time)) {
+				$event->end_time = $tempDate->format('23:59:59');
 			}
+
 			$event->notes = $data['note'];
 			$event->location = $data['location'];
 			$event->updated_by = $updatedUserId;
 			$event->save();
+
 			//Update the users
 			$delCurrentUsers = \EventUser::where('events_id',$data['eventid'])->forceDelete();
 			$email  = $data['tagsinput'];
 			$emails =  preg_split("/[\s,]+/", $email);
 			$user_id = \User::whereIn('email',$emails)->lists('id');
-			foreach ($user_id as $userid) 
+			foreach ($user_id as $userid)
 			{
 					$eventuser = new \EventUser;
 					$eventuser->user_id = $userid;
 					$eventuser->events_id = $data['eventid'];
 					$eventuser->updated_by = $updatedUserId;
-					$eventuser->save();	
-									
+					$eventuser->save();
+
 			}
 			//Everything done
 			return 'success';

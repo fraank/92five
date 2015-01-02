@@ -31,8 +31,8 @@ Schema::create('events', function($table) {
  $table->string('title', 200)->nullable();
  $table->string('category', 128)->nullable();
  $table->date('date')->nullable();
- $table->dateTime('start_time')->nullable();
- $table->dateTime('end_time')->nullable();
+ $table->time('start_time')->nullable();
+ $table->time('end_time')->nullable();
  $table->unsignedInteger('project')->nullable();
  $table->unsignedInteger('task')->nullable();
  $table->text('notes')->nullable();
@@ -76,7 +76,7 @@ Schema::create('file_ref', function($table) {
  $table->dateTime('updated_at')->nullable();
  $table->dateTime('created_at')->nullable();
  $table->dateTime('deleted_at')->nullable();
- $table->dateTime('deleted_by')->nullable();
+ $table->unsignedInteger('deleted_by')->nullable();
  });
 
 
@@ -220,8 +220,8 @@ Schema::create('timesheet', function($table) {
  $table->double('total_time_spent')->nullable();
  $table->unsignedInteger('total_hours')->nullable();
  $table->unsignedInteger('total_minutes')->nullable();
- $table->dateTime('start_time')->nullable();
- $table->dateTime('end_time')->nullable();
+ $table->time('start_time')->nullable();
+ $table->time('end_time')->nullable();
  $table->text('details')->nullable();
  $table->text('remarks')->nullable();
  $table->dateTime('updated_at')->nullable();
