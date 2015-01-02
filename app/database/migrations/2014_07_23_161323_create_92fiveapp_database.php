@@ -31,9 +31,9 @@ Schema::create('events', function($table) {
  $table->string('title', 200)->nullable();
  $table->string('category', 128)->nullable();
  $table->date('date')->nullable();
- $table->('start_time')->nullable();
- $table->('end_time')->nullable();
- $table->('project')->nullable();
+ $table->dateTime('start_time')->nullable();
+ $table->dateTime('end_time')->nullable();
+ $table->unsignedInteger('project')->nullable();
  $table->unsignedInteger('task')->nullable();
  $table->text('notes')->nullable();
  $table->string('folder', 128)->nullable();
@@ -217,11 +217,11 @@ Schema::create('timesheet', function($table) {
  $table->string('title', 128)->nullable();
  $table->unsignedInteger('task_id')->nullable();
  $table->date('date')->nullable();
- $table->('total_time_spent')->nullable();
+ $table->double('total_time_spent')->nullable();
  $table->unsignedInteger('total_hours')->nullable();
  $table->unsignedInteger('total_minutes')->nullable();
- $table->('start_time')->nullable();
- $table->('end_time')->nullable();
+ $table->dateTime('start_time')->nullable();
+ $table->dateTime('end_time')->nullable();
  $table->text('details')->nullable();
  $table->text('remarks')->nullable();
  $table->dateTime('updated_at')->nullable();

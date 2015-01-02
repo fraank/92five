@@ -1,0 +1,9 @@
+# configs
+app/config/database.php
+
+# assets‚
+assets/images/profilepics/
+
+# precompiled things
+# run php artisan optimize to generate these files:
+bootstrap/compiled.php
