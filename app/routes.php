@@ -24,7 +24,7 @@ Route::get('/', function()
 	else
 	{
 		return Redirect::to('dashboard');
-	}	
+	}
 });
 
 Route::get('/forgotpassword', function()
@@ -47,7 +47,7 @@ Route::get('/logout', function(){
 	Sentry::logout();
 	return Redirect::to('/login');
 });
-Route::group(array('prefix'=>'install','before'=>'install'),function() 
+Route::group(array('prefix'=>'install','before'=>'install'),function()
 {
     Route::get('/','InstallController@getIndex');
     Route::get('/database','InstallController@getDatabase');
@@ -62,7 +62,7 @@ Route::post('/auth/updatepassword', 'AuthController@authUpdatePassword');
 Route::get('/auth/activateuser', 'AuthController@authActivateUser');
 Route::post('/auth/createuser', 'AuthController@authCreateUser');
 Route::get('/auth/verifyemail','AuthController@authVerifyEmail');
-Route::group(array('prefix'=>'dashboard','before'=>'auth'),function() 
+Route::group(array('prefix'=>'dashboard','before'=>'auth'),function()
 {
 
 				 Route::get('/', 'Controllers\Domain\Dashboard\DashboardController@getIndex');
@@ -100,7 +100,7 @@ Route::group(array('prefix'=>'dashboard','before'=>'auth'),function()
 				Route::get('projects/{id}','Controllers\Domain\Dashboard\ProjectController@getViewProject')->where('id', '[0-9]+');
 				Route::get('/download/{md5}','Controllers\Domain\Dashboard\DashboardController@getDownloadFile');
 				Route::post('projects/delete','Controllers\Domain\Dashboard\ProjectController@deleteProject');
-				
+
 				Route::get('projects/edit/{id}','Controllers\Domain\Dashboard\ProjectController@getEditProject')->where('id', '[0-9]+');
 				Route::post('projects/edit/{id}','Controllers\Domain\Dashboard\ProjectController@postEditProject');
 				Route::post('projects/edit/add/files','Controllers\Domain\Dashboard\ProjectController@postAddFiles');
@@ -173,9 +173,17 @@ Route::group(array('prefix'=>'dashboard','before'=>'auth'),function()
 				Route::post('me/changemypassword','Controllers\Domain\Dashboard\UserController@postChangePassword');
 
 				/************** admin routes ************/
-				Route::group(array('prefix'=>'admin','before'=>'admin'),function() 
+				Route::group(array('prefix'=>'admin','before'=>'admin'),function()
 				{
 					Route::get('/', 'Controllers\Domain\Admin\AdminController@getIndex');
+
+					Route::get('calendar_categories', 'Controllers\Domain\Admin\CalendarCategoryController@index');
+					Route::get('calendar_categories/add', 'Controllers\Domain\Admin\CalendarCategoryController@add');
+					Route::post('calendar_categories/add', 'Controllers\Domain\Admin\CalendarCategoryController@postAdd');
+					Route::get('calendar_categories/update/{id?}', 'Controllers\Domain\Admin\CalendarCategoryController@update');
+					Route::post('calendar_categories/update/{id?}', 'Controllers\Domain\Admin\CalendarCategoryController@postUpdate');
+					Route::post('calendar_categories/delete','Controllers\Domain\Admin\CalendarCategoryController@delete');
+
 					Route::get('users', 'Controllers\Domain\Admin\UserController@getAllUsers');
 					Route::get('users/add', 'Controllers\Domain\Admin\UserController@getAddUser');
 					Route::post('users/add', 'Controllers\Domain\Admin\UserController@postAddUser');
@@ -206,11 +214,3 @@ Route::group(array('prefix'=>'dashboard','before'=>'auth'),function()
                 });
 
  });
-
-
-
-
-
-
-
-

@@ -36,65 +36,7 @@
                       <label class="control-label" for="passwordinput">Category:</label>
                       <div class="controls">
                         <div class="task_select">
-                          <select name="category" id="category" tabindex="1" style="width:270px;">
-                            @if($event[0]['category'] == null)
-                            <option name="" value="" selected="selected" title="">Select Category</option>
-                            <option  name="" value="Meeting - General" title="">Meeting - General</option>
-                            <option  name="" value="Meeting - Project" title="">Meeting - Project</option>
-                            <option  name="" value="Meeting - Task" title="">Meeting - Task</option>
-                            <option  name="" value="Deliverer" title="">Deliverer</option>
-                            <option  name="" value="Client" title="">Client</option>
-                            <option  name="" value="Others" title="">Others</option>
-                            @elseif($event[0]['category'] == "Meeting - General")
-                            <option name="" value=""  title="">Select Category</option>
-                            <option  name="" value="Meeting - General" selected="selected" title="">Meeting - General</option>
-                            <option  name="" value="Meeting - Project" title="">Meeting - Project</option>
-                            <option  name="" value="Meeting - Task" title="">Meeting - Task</option>
-                            <option  name="" value="Deliverer" title="">Deliverer</option>
-                            <option  name="" value="Client" title="">Client</option>
-                            <option  name="" value="Others" title="">Others</option>
-                            @elseif($event[0]['category'] == "Meeting - Project")
-                            <option name="" value=""  title="">Select Category</option>
-                            <option  name="" value="Meeting - General" title="">Meeting - General</option>
-                            <option  name="" value="Meeting - Project" selected="selected"  title="">Meeting - Project</option>
-                            <option  name="" value="Meeting - Task" title="">Meeting - Task</option>
-                            <option  name="" value="Deliverer" title="">Deliverer</option>
-                            <option  name="" value="Client" title="">Client</option>
-                            <option  name="" value="Others" title="">Others</option>
-                            @elseif($event[0]['category'] == "Meeting - Task")
-                            <option name="" value=""  title="">Select Category</option>
-                            <option  name="" value="Meeting - General" title="">Meeting - General</option>
-                            <option  name="" value="Meeting - Project"   title="">Meeting - Project</option>
-                            <option  name="" value="Meeting - Task" selected="selected" title="">Meeting - Task</option>
-                            <option  name="" value="Deliverer" title="">Deliverer</option>
-                            <option  name="" value="Client" title="">Client</option>
-                            <option  name="" value="Others" title="">Others</option>
-                            @elseif($event[0]['category'] == "Deliverer")
-                            <option name="" value=""  title="">Select Category</option>
-                            <option  name="" value="Meeting - General" title="">Meeting - General</option>
-                            <option  name="" value="Meeting - Project"   title="">Meeting - Project</option>
-                            <option  name="" value="Meeting - Task"  title="">Meeting - Task</option>
-                            <option  name="" value="Deliverer" selected="selected" title="">Deliverer</option>
-                            <option  name="" value="Client" title="">Client</option>
-                            <option  name="" value="Others" title="">Others</option>
-                            @elseif($event[0]['category'] == "Client")
-                            <option name="" value=""  title="">Select Category</option>
-                            <option  name="" value="Meeting - General" title="">Meeting - General</option>
-                            <option  name="" value="Meeting - Project"   title="">Meeting - Project</option>
-                            <option  name="" value="Meeting - Task"  title="">Meeting - Task</option>
-                            <option  name="" value="Deliverer"  title="">Deliverer</option>
-                            <option  name="" value="Client" selected="selected" title="">Client</option>
-                            <option  name="" value="Others" title="">Others</option>
-                            @elseif($event[0]['category'] == "Others")
-                            <option name="" value=""  title="">Select Category</option>
-                            <option  name="" value="Meeting - General" title="">Meeting - General</option>
-                            <option  name="" value="Meeting - Project"   title="">Meeting - Project</option>
-                            <option  name="" value="Meeting - Task"  title="">Meeting - Task</option>
-                            <option  name="" value="Deliverer"  title="">Deliverer</option>
-                            <option  name="" value="Client"  title="">Client</option>
-                            <option  name="" value="Others" selected="selected" title="">Others</option>
-                            @endif
-                          </select>
+                          {{ Form::select('calendar_category_id', \CalendarCategory::select(), $event[0]['calendar_category_id'], array( "tabindex" =>"1", "style" => "width:270px;", "data-required" => "true", "data-show-errors" => "false")) }}
                         </div>
                       </div>
                     </div>

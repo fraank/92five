@@ -26,6 +26,10 @@
                 <h3>{{trans('92five.logs')}}</h3>
                 <div class="report-image"><a   href="{{url('dashboard/admin/logs')}}"><img src="{{asset('assets/images/dashboard/logs.png')}}" alt=""/></a></div>
               </div>
+              <div class="span3 report-box">
+                <h3>{{trans('92five.calendar_categories')}}</h3>
+                <div class="report-image"><a   href="{{url('dashboard/admin/calendar_categories')}}"><img src="{{asset('assets/images/dashboard/logs.png')}}" alt=""/></a></div>
+              </div>
             </div>
         </div>
       </div>
@@ -39,7 +43,7 @@
   </div>
   <div class="modal-body">
     <div class="confirm-button">
-      <form method="post" action="{{url('/dashboard/admin/deleterestore')}}" method='post' data-validate="parsley"> 
+      <form method="post" action="{{url('/dashboard/admin/deleterestore')}}" method='post' data-validate="parsley">
         <div class="modal-body">
           <div class="popup_event">
             <div class="add-proj-form">
@@ -54,17 +58,17 @@
                               <select name="entity" id="entity" tabindex="1" style="width:270px;">
                                   <option  name="" value="projects" title="">{{trans('92five.Projects')}}</option>
                                   <option  name="" value="tasks" title="">{{trans('92five.Tasks')}}</option>
-                                  <option  name="" value="events" title="">{{trans('92five.calendarEvents')}}</option>                      
-                              </select>      
+                                  <option  name="" value="events" title="">{{trans('92five.calendarEvents')}}</option>
+                              </select>
                             </div>
                           </div>
-                      </div>                                                                             
+                      </div>
                     </div>
                   </div>
                 </div>
               </fieldset>
-            </div>            
-          </div> 
+            </div>
+          </div>
         </div>
         <button class="submit">{{trans('92five.submit')}}</button>
       </form>
@@ -104,4 +108,3 @@ $(document).ready( function() {
 @stop
 @section('endjs')
 @stop
-

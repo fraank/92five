@@ -31,15 +31,7 @@
                 <label class="control-label" for="passwordinput">Category:</label>
                 <div class="controls">
                   <div class="task_select">
-                    <select name="category" id="category" tabindex="1" style="width:270px;" data-required="true"  data-show-errors="false">
-                      <option name="" value="" selected="selected" title="">Select Category</option>
-                      <option  name="" value="Meeting - General" title="">Meeting - General</option>
-                      <option  name="" value="Meeting - Project" title="">Meeting - Project</option>
-                      <option  name="" value="Meeting - Task" title="">Meeting - Task</option>
-                      <option  name="" value="Deliverer" title="">Deliverer</option>
-                      <option  name="" value="Client" title="">Client</option>
-                      <option  name="" value="Others" title="">Others</option>
-                    </select>
+                    {{ Form::select('calendar_category_id', \CalendarCategory::select(), false, array("style" => "width:270px;", "data-required" => "true", "data-show-errors" => "false")) }}
                   </div>
                 </div>
               </div>

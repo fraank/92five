@@ -12,7 +12,6 @@ use \SomeThingWentWrongException as SomeThingWentWrongException;
 
 class CalendarRepository implements CalendarInterface{
 
-
 	public function addEvent($data,$createdUserId)
 	{
 		try
@@ -20,7 +19,7 @@ class CalendarRepository implements CalendarInterface{
 			//Create a new instance of the model
 			$calendar =  new \Events;
 			$calendar->title = $data['title'];
-			$calendar->category = $data['category'];
+			$calendar->calendar_category_id = intval($data['calendar_category_id']);
 			$calendar->date = $data['date_submit'];
 			$calendar->notes = $data['note'];
 			$calendar->location = $data['location'];
@@ -74,7 +73,7 @@ class CalendarRepository implements CalendarInterface{
 			$eventsId = \EventUser::where('user_id',$userId)->lists('events_id');
 			if(sizeof($eventsId) != 0)
 			{
-			$events = \Events::whereIn('id',$eventsId)->where('date',$day)->orderBy('start_time')->get(array('id','title','start_time','end_time','category','notes','location','updated_by', 'allday'))->toArray();
+			$events = \Events::whereIn('id',$eventsId)->where('date',$day)->orderBy('start_time')->get(array('id','title','start_time','end_time','calendar_category_id','notes','location','updated_by', 'allday'))->toArray();
 			foreach ($events as $event) {
 
 				$users = \Events::find($event['id'])->users()->orderBy('first_name')->get()->toArray();
@@ -179,7 +178,7 @@ class CalendarRepository implements CalendarInterface{
 		{
 			$event = \Events::find($data['eventid']);
 			$event->title = $data['title'];
-			$event->category = $data['category'];
+			$event->calendar_category_id = intval($data['calendar_category_id']);
       $tempDate =\DateTime::createFromFormat('j F, Y',$data['date']);
       $event->date =  $tempDate->format('Y-m-d');
 

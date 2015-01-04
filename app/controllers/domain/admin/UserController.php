@@ -1,6 +1,6 @@
 <?php namespace Controllers\Domain\Admin;
 /**
- * User Controller.    
+ * User Controller.
  * @version    1.0.0
  * @author     Chintan Banugaria
  * @copyright  (c) 2014, 92fiveapp
@@ -118,7 +118,7 @@ class UserController extends \BaseController{
         {
              return \Redirect::to('dashboard/admin/users')->with('status','error')->with('message','Something Went Wrong');
         }
-        
+
     }
     /**
      * Delete User

@@ -1,6 +1,6 @@
 <?php
 /**
- * User Interface.    
+ * User Interface.
  * @version    1.0.0
  * @author     Chintan Banugaria
  * @copyright  (c) 2014, 92fiveapp
@@ -14,9 +14,9 @@ interface UserInterface{
     //Update User Profile
     public function updateMyDetails($userId,$data);
     //Change User Email
-	public function changeMyEmail($userId,$newEmail);
+    public function changeMyEmail($userId,$newEmail);
     //Update User Password
-	public function updatePassword($userId,$password);
+    public function updatePassword($userId,$password);
     //Get All Users
     public function getAllUsersData();
     //Manage Users

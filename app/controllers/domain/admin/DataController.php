@@ -1,6 +1,6 @@
 <?php namespace Controllers\Domain\Admin;
 /**
- * Data Controller.    
+ * Data Controller.
  * @version    1.0.0
  * @author     Chintan Banugaria
  * @copyright  (c) 2014, 92fiveapp
@@ -12,9 +12,9 @@ class DataController extends \BaseController{
          * @return View
          */
 		public function getIndex()
-        {   
+        {
              try
-             {   
+             {
                 //Get the type of entity
                 $entity = \Input::get('entity');
                 if($entity == 'projects')
@@ -26,7 +26,7 @@ class DataController extends \BaseController{
                     {
                             //Manipulation
                             foreach($projects as $project)
-                            {   
+                            {
                                 $tempData;
                                 $tempData['id'] = $project['id'];
                                 $tempData['name'] = $project['project_name'];
@@ -84,7 +84,7 @@ class DataController extends \BaseController{
                                         ->with('data',null)
                                         ->with('type','Tasks');
                     }
-                  
+
                 }
                 elseif($entity == 'events')
                 {
@@ -107,14 +107,14 @@ class DataController extends \BaseController{
                             $user = \User::find($userId)->get(array('first_name','last_name'))->toArray();
                             $tempData['user'] = $user;
                             $data [] = $tempData;
-                        } 
+                        }
                         //Return Data
                         return \View::make('dashboard.admin.data')
                                     ->with('data',$data)
-                                    ->with('type','Events');  
+                                    ->with('type','Events');
                     }
                     else
-                    {   
+                    {
                         //No Data Found. Return Null
                         return \View::make('dashboard.admin.data')
                                         ->with('data',null)
@@ -150,7 +150,7 @@ class DataController extends \BaseController{
                                     if(sizeof($tasks) != 0)
                                     {
                                         //Delet Each Task
-                                        foreach ($tasks as $task) 
+                                        foreach ($tasks as $task)
                                         {
                                             $result = static::deleteEntity($task,'task');
                                         }
@@ -159,14 +159,14 @@ class DataController extends \BaseController{
                                     $result = static::deleteEntity($project['id'],'project');
                                 }
                           }
-                         //For Notifications 
+                         //For Notifications
                         \Session::put('status','success');
                         \Session::put('message', 'Project Deleted');
                         return \View::make('dashboard.admin.data')
                             ->with('data',null)
-                            ->with('type','Projects'); 
+                            ->with('type','Projects');
 
-                        
+
                     }
                     elseif($type == 'tasks')
                     {
@@ -187,8 +187,8 @@ class DataController extends \BaseController{
                         \Session::put('message', 'Tasks Deleted');
                         return \View::make('dashboard.admin.data')
                                             ->with('data',null)
-                                            ->with('type','Tasks'); 
-                        
+                                            ->with('type','Tasks');
+
                     }
                     elseif($type == 'events')
                     {
@@ -199,7 +199,7 @@ class DataController extends \BaseController{
                        \Session::put('message', 'Events Deleted');
                          return \View::make('dashboard.admin.data')
                                             ->with('data',null)
-                                            ->with('type','Events');                                    
+                                            ->with('type','Events');
 
                     }
             }
@@ -240,12 +240,12 @@ class DataController extends \BaseController{
                     if(is_dir($dir))
                     {
                        //If Uploads directory exists, get list of files
-                        $files = array_diff(scandir($dir),array('.','..')); 
+                        $files = array_diff(scandir($dir),array('.','..'));
                         //Delete Each file
-                        foreach ($files as $file) 
-                        { 
-                            unlink($dir.'/'.$file); 
-                        } 
+                        foreach ($files as $file)
+                        {
+                            unlink($dir.'/'.$file);
+                        }
                         //Delete folder
                         $deleteFolder = \File::deleteDirectory($dir);
                         //Get the file attachment Ids
@@ -253,15 +253,15 @@ class DataController extends \BaseController{
                         if(sizeof($fileIds) != 0)
                         {
                             //Delete each file attachment entry from database
-                            foreach ($fileIds as $fieldId) 
+                            foreach ($fileIds as $fieldId)
                             {
-                             
+
                                 $deletefile = \Files::find($fieldId);
                                 $deletefile->forceDelete();
                             }
                         }
                         //Delete the entity
-                        $entity->forceDelete();  
+                        $entity->forceDelete();
                     }
                     else
                     {
@@ -328,9 +328,9 @@ class DataController extends \BaseController{
                         //Get all tasks for the project
                         $tasks = \Task::withTrashed()->where('project_id',$entityId)->lists('id');
                         if(sizeof($tasks) != 0)
-                        {   
+                        {
                             //Delete All Tasks
-                            foreach ($tasks as $task) 
+                            foreach ($tasks as $task)
                             {
                                 $result = static::deleteEntity($task,'task');
                             }
@@ -369,7 +369,7 @@ class DataController extends \BaseController{
                         }
                     }
                     elseif($entityType == 'events')
-                    {   
+                    {
                         //Delete Event
                         $event = \Events::withTrashed()->find($entityId);
                         $event->forceDelete();
@@ -387,13 +387,13 @@ class DataController extends \BaseController{
                                 $tempData['deleted_at'] = $event['deleted_at'];
                                 $tempData['updated_at'] = $event['updated_at'];
                                 $data [] = $tempData;
-                            } 
+                            }
                             //For Notifications
                             \Session::put('status','success');
                             \Session::put('message', 'Event Deleted');
                             return \View::make('dashboard.admin.data')
                                         ->with('data',$data)
-                                        ->with('type','Events');  
+                                        ->with('type','Events');
                         }
                         else
                         {
@@ -429,7 +429,7 @@ class DataController extends \BaseController{
                        \Session::put('message', 'Events Restored');
                          return \View::make('dashboard.admin.data')
                                             ->with('data',null)
-                                            ->with('type','Events');    
+                                            ->with('type','Events');
                     }
                     elseif($type == 'tasks')
                     {
@@ -503,7 +503,7 @@ class DataController extends \BaseController{
                             if(sizeof($taskIds) != 0)
                             {
                                 //Restore each task
-                                foreach ($taskIds as $taskId) 
+                                foreach ($taskIds as $taskId)
                                 {
                                    $task = \Task::withTrashed()->find($taskId);
                                    if($task->trashed())
@@ -599,7 +599,7 @@ class DataController extends \BaseController{
                             $taskIds = \Task::withTrashed()->where('project_id',$entityId)->lists('id');
                             if(sizeof($taskIds) != 0)
                             {
-                                foreach ($taskIds as $taskId) 
+                                foreach ($taskIds as $taskId)
                                 {
                                    $task = \Task::withTrashed()->find($taskId);
                                    //Check if task if trashed or not
@@ -666,13 +666,13 @@ class DataController extends \BaseController{
                                 $tempData['deleted_at'] = $event['deleted_at'];
                                 $tempData['updated_at'] = $event['updated_at'];
                                 $data [] = $tempData;
-                            } 
+                            }
                             //For Notifications
                             \Session::put('status','success');
                             \Session::put('message', 'Event Restored');
                             return \View::make('dashboard.admin.data')
                                         ->with('data',$data)
-                                        ->with('type','Events');  
+                                        ->with('type','Events');
                         }
                         else
                         {
@@ -691,5 +691,5 @@ class DataController extends \BaseController{
                 throw new \SomethingWentWrongException();
             }
         }
-          
+
 }
