@@ -68,53 +68,57 @@ App::error(function(Exception $exception, $code)
     }
 });
 App::error(function(TaskNotFoundException $exception, $code)
-{	
-            return Response::view('errors.notfound', array('subject'=>'Task'), 404);   
+{
+            return Response::view('errors.notfound', array('subject'=>'Task'), 404);
 });
 App::error(function(ProjectNotFoundException $exception, $code)
-{  
-            return Response::view('errors.notfound', array('subject'=>'Project'), 404);   
+{
+            return Response::view('errors.notfound', array('subject'=>'Project'), 404);
 });
 App::error(function(FileNotFoundException $exception, $code)
-{  
-            return Response::view('errors.notfound', array('subject'=>'File'), 404);   
+{
+            return Response::view('errors.notfound', array('subject'=>'File'), 404);
 });
 App::error(function(EventNotFoundException $exception, $code)
 {
-              return Response::view('errors.notfound', array('subject'=>'Event'), 404);   
+              return Response::view('errors.notfound', array('subject'=>'Event'), 404);
 });
 App::error(function(TimesheetEntryNotFoundException $exception, $code)
 {
-              return Response::view('errors.notfound', array('subject'=>'Timesheet Entry'), 404);   
+              return Response::view('errors.notfound', array('subject'=>'Timesheet Entry'), 404);
 });
 App::error(function(UserNotFoundException $exception, $code)
 {
-              return Response::view('errors.notfound', array('subject'=>'User'), 404);   
+              return Response::view('errors.notfound', array('subject'=>'User'), 404);
 });
 App::error(function(NotAuthorizedForProject $exception, $code)
 {
-              return Response::view('errors.notauthorized', array('subject'=>'Project'), 401);   
+              return Response::view('errors.notauthorized', array('subject'=>'Project'), 401);
 });
 App::error(function(NotAuthorizedForTaskException $exception, $code)
 {
-              return Response::view('errors.notauthorized', array('subject'=>'Task'), 401);   
+              return Response::view('errors.notauthorized', array('subject'=>'Task'), 401);
 });
 App::error(function(NotAuthorizedForEventException $exception, $code)
 {
-              return Response::view('errors.notauthorized', array('subject'=>'Event'), 401);   
+              return Response::view('errors.notauthorized', array('subject'=>'Event'), 401);
 });
 App::error(function(NotAuthorizedForTimesheetEntryException $exception, $code)
 {
-              return Response::view('errors.notauthorized', array('subject'=>'Timesheet Entry'), 401);   
+              return Response::view('errors.notauthorized', array('subject'=>'Timesheet Entry'), 401);
 });
-App::error(function(SomeThingWentWrongException $exception, $code)
-{
-              return Response::view('errors.somethingwentwrong', array('subject'=>'Project'),400);   
-});
-App::error(function(Exception $exception, $code)
-{   
-    return Response::view('errors.somethingwentwrong', array('subject'=>'Project'),400);   
-});
+
+// please hide errors only in production mode
+if(Config::get('app.debug') == false) {
+	App::error(function(SomeThingWentWrongException $exception, $code)
+	{
+	             return Response::view('errors.somethingwentwrong', array('subject'=>'Project'),400);
+	});
+	App::error(function(Exception $exception, $code)
+	{
+	    return Response::view('errors.somethingwentwrong', array('subject'=>'Project'),400);
+	});
+}
 
 
 /*App::missing(function($exception)
@@ -167,6 +171,10 @@ App::bind('ReportInterface',function(){
 App::bind('UserInterface',function(){
 
 	return new UserRepository;
+});
+App::bind('CalendarCategoryInterface',function(){
+
+	return new CalendarCategoryRepository;
 });
 /*
 
