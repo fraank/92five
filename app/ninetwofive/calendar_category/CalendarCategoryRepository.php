@@ -21,6 +21,7 @@ class CalendarCategoryRepository implements CalendarCategoryInterface{
       $calendar_category =  new \CalendarCategory;
       $calendar_category->title = $data['title'];
       $calendar_category->description = $data['description'];
+      $calendar_category->public_content = $data['public_content'];
       //$calendar_category->updated_by = $createdUserId;
       //Save the model
       $calendar_category->save();
@@ -102,48 +103,14 @@ class CalendarCategoryRepository implements CalendarCategoryInterface{
   {
     try
     {
-      $event = \CalendarCategory::find($data['eventid']);
-      $event->title = $data['title'];
-      $event->calendar_category_id = intval($data['calendar_category_id']);
-      $tempDate =\DateTime::createFromFormat('j F, Y',$data['date']);
-      $event->date =  $tempDate->format('Y-m-d');
+      $calendar_category = \CalendarCategory::where('id',intval($data['calendarCategoryId']))->first();
+      $calendar_category->title = $data['title'];
+      $calendar_category->description = $data['description'];
+      $calendar_category->public_content = $data['public_content'];
 
-      if(empty($data['allday']))
-      $event->allday = false;
-      else
-      $event->allday = true;
+      //$calendar_category->updated_by = $updatedUserId;
+      $calendar_category->save();
 
-      if($data['starttime_submit'] != '') {
-        $event->start_time = $data['starttime_submit'];
-      } else if ($event->allday == true && !empty($event->start_time)) {
-        $event->start_time = $tempDate->format('00:00:00');
-      }
-
-      if($data['endtime_submit'] != '') {
-        $event->end_time = $data['endtime_submit'];
-      } else if ($event->allday == true && !empty($event->end_time)) {
-        $event->end_time = $tempDate->format('23:59:59');
-      }
-
-      $event->notes = $data['note'];
-      $event->location = $data['location'];
-      $event->updated_by = $updatedUserId;
-      $event->save();
-
-      //Update the users
-      $delCurrentUsers = \EventUser::where('events_id',$data['eventid'])->forceDelete();
-      $email  = $data['tagsinput'];
-      $emails =  preg_split("/[\s,]+/", $email);
-      $user_id = \User::whereIn('email',$emails)->lists('id');
-      foreach ($user_id as $userid)
-      {
-        $eventuser = new \EventUser;
-        $eventuser->user_id = $userid;
-        $eventuser->events_id = $data['eventid'];
-        $eventuser->updated_by = $updatedUserId;
-        $eventuser->save();
-
-      }
       //Everything done
       return 'success';
     }

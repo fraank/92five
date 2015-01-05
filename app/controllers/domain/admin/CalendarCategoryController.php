@@ -66,9 +66,10 @@ class CalendarCategoryController extends \BaseController{
     return \View::make('dashboard.calendar_categories.update')->with('form', $form);
   }
 
-  public function postUpdate()
+  public function postUpdate($id)
   {
     $data = \Input::all();
+    $data['calendarCategoryId'] = $id;
     $createdUserId = Sentry::getUser()->id;
     $result = $this->calendar_category->editCalendarCategory($data, $createdUserId);
     if($result)

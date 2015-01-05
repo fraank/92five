@@ -20,7 +20,6 @@
               <th>created</th>
               <th>updated</th>
               <th>Public Content?</th>
-              <th>Deleted?</th>
               <th>Actions</th>
             </thead>
         @if(sizeof($data)!=0)
@@ -41,33 +40,18 @@
 
             <td>
               @if($calendar_category['public_content'] == true)
-                <div class="view_checkbox">
-                  <input type="checkbox" id="public-{{$calendar_category['id']}}" checked class="regular-checkbox checked" />
-                  <label calendarcategoryid={{$calendar_category['id']}} checked class="public" for="banned-{{$calendar_category['id']}}"></label>
-                </div>
+                yes
               @else
-                <div class="view_checkbox">
-                  <input type="checkbox" id="public-{{$calendar_category['id']}}"  class="regular-checkbox checked" />
-                  <label calendarcategoryid={{$calendar_category['id']}} class="public" for="banned-{{$calendar_category['id']}}"></label>
-                </div>
+                no
               @endif
             </td>
             <td>
               @if($calendar_category['deleted_at'])
-                <div class="view_checkbox">
-                  <input type="checkbox" id="deleted-{{$calendar_category['id']}}" checked class="regular-checkbox checked" />
-                  <label calendarcategoryid={{$calendar_category['id']}} checked class="deleted" for="deleted-{{$calendar_category['id']}}"></label>
-                </div>
+
               @else
-                <div class="view_checkbox">
-                  <input type="checkbox" id="deleted-{{$calendar_category['id']}}"  class="regular-checkbox checked" />
-                  <label calendarcategoryid={{$calendar_category['id']}} class="deleted" for="deleted-{{$calendar_category['id']}}"></label>
-                </div>
-              @endif
-            </td>
-            <td>
               <a href="{{url('/dashboard/admin/calendar_categories/update',array($calendar_category['id']))}}" class="p-icon-2" title="Change Email">Update</a> |
               <a class="calendarcategory_delete" calendarcategoryid="{{$calendar_category->id}}" href="#">Delete</a>
+              @endif
             </td>
           </tr>
           @endforeach

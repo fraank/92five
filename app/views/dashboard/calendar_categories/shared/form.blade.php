@@ -13,11 +13,10 @@
     </div>
     <div class="span6 edit_user_right">
       <fieldset>
+        <label  for="public_content" >Is content public?</label>
         <div class="control-group">
-          <div class="view_checkbox">
-            <input id="banned-public" type="checkbox" class="regular-checkbox checked"" />
-            <label class="public" for="banned-public"></label>
-          </div>
+          <input id="public_content" name="public_content" value="0" type="hidden" />
+          {{ Form::checkbox('public_content', '1', $form->public_content) }}
         </div>
       </fieldset>
     </div>
