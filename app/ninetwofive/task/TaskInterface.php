@@ -1,6 +1,6 @@
-<?php 
+<?php
 /**
- * Task Interface.    
+ * Task Interface.
  * @version    1.0.0
  * @author     Chintan Banugaria
  * @copyright  (c) 2014, 92fiveapp
@@ -10,10 +10,10 @@
 interface TaskInterface{
 
 	//Get All Tasks
-	public function all($userid);
+	public function all($userid, $order_by = 'name');
 	//Get all Tasks for a Project
 	public function getProjectTasks($projectId, $userId);
-	//Update status 
+	//Update status
 	public function updateStatus($data, $userId);
 	//Add new Task
 	public function addTask($data, $userId);
@@ -21,7 +21,7 @@ interface TaskInterface{
 	public function addSubTask($data, $userId);
 	//Delete Sub Task
 	public function deleteSubTask($id);
-	//Check permission 
+	//Check permission
 	public function checkPermission($taskId, $userId);
 	//View the Task
 	public function viewTask($taskId);

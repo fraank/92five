@@ -5,7 +5,7 @@ use \Projectcollabs as ProjectUsers;
 use Cartalyst\Sentry\Facades\Laravel\Sentry as Sentry;
 use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
 /**
- * Task Controller.    
+ * Task Controller.
  * @version    1.0.0
  * @author     Chintan Banugaria
  * @copyright  (c) 2014, 92fiveapp
@@ -21,7 +21,7 @@ class TaskController extends \BaseController{
 	public function __construct()
 	{
 		$this->tasks = \App::make('TaskInterface');
-		                      
+
 	}
 	/**
 	* Get all assigned task for the logged in user
@@ -32,7 +32,7 @@ class TaskController extends \BaseController{
 		//Get the user id of the currently logged in user
 		$user_id =  Sentry::getUser()->id;
 		//Get the tasks
-		$userTasks = $this->tasks->all($user_id);		
+		$userTasks = $this->tasks->all($user_id, 'end_date');
 		//Manipulation
 		$projects = $userTasks['projects'];
 		$projectName = $userTasks['name_proj'];
@@ -64,7 +64,7 @@ class TaskController extends \BaseController{
 		{
 			//Something went wrong
 			return \Response::json('error', 500);
-		}		
+		}
 	}
 	/**
 	* Get projects for specific task
@@ -104,7 +104,7 @@ class TaskController extends \BaseController{
 	*/
 	public function getAddTasks()
 	{
-		
+
 		//Get the user id of the currently logged in user
 		$userId = Sentry::getUser()->id;
 		//Get the project List
@@ -133,7 +133,7 @@ class TaskController extends \BaseController{
 	{
 		//Get all the data
 		$data = \Input::json()->all();
-		//Get the user id of the currently logged in user	
+		//Get the user id of the currently logged in user
 		$userId = Sentry::getUser()->id;
 		//Add data
 		$result = $this->tasks->addTask($data, $userId);
@@ -151,7 +151,7 @@ class TaskController extends \BaseController{
 				return \Response::json(array(
 				        'error' => true),
 				        500);
-		}		
+		}
 	}
 	/**
 	* Add Sub Task
@@ -160,7 +160,7 @@ class TaskController extends \BaseController{
 	public function postAddSubTask()
 	{
 		//Get all data
-		$data = \Input::json()->all();	
+		$data = \Input::json()->all();
 		//Get the user id of the currently logged in user
 		$userId = Sentry::getUser()->id;
 		//Add Subtask
@@ -221,7 +221,7 @@ class TaskController extends \BaseController{
 		{
 			throw new \TaskNotFoundException();
 		}
-		//Get the user id of the currently logged in user	
+		//Get the user id of the currently logged in user
 		$userId = Sentry::getUser()->id;
 		//Check Permission
 		$result = $this->tasks->checkPermission($taskId, $userId);
@@ -238,7 +238,7 @@ class TaskController extends \BaseController{
 		{
 			//Not Authorized
 			throw new \NotAuthorizedForTaskException();
-		}	
+		}
 	}
 	/**
 	* Upload files and add it to the task
@@ -248,7 +248,7 @@ class TaskController extends \BaseController{
 	{
 			//Get the file
 			$file = \Input::file('file');
-			//Get the user id of the currently logged in user	
+			//Get the user id of the currently logged in user
 			$userId = Sentry::getUser()->id;
 			//Upload the file
 			$result = \Fileupload::upload($file,$taskId,'task',$userId);
@@ -270,7 +270,7 @@ class TaskController extends \BaseController{
 		{
 			throw new \TaskNotFoundException();
 		}
-		//Get the user id of the currently logged in user	
+		//Get the user id of the currently logged in user
 		$userId = Sentry::getUser()->id;
 		//Check the permission
 		$result = $this->tasks->checkPermission($taskId, $userId);
@@ -286,7 +286,7 @@ class TaskController extends \BaseController{
 		else
 		{
 			//Not Authorized
-			throw new \NotAuthorizedForTaskException();	
+			throw new \NotAuthorizedForTaskException();
 		}
 	}
 	/**
@@ -304,7 +304,7 @@ class TaskController extends \BaseController{
 		{
 			throw new \TaskNotFoundException();
 		}
-		//Get the user id of the currently logged in user	
+		//Get the user id of the currently logged in user
 		$userId = Sentry::getUser()->id;
 		//Check permission
 		$result = $this->tasks->checkPermission($taskId, $userId);
@@ -335,9 +335,9 @@ class TaskController extends \BaseController{
 				else
 				{
 					$emaillist = $emaillist.','.$user['email'];
-				}	
+				}
 			}
-			//Return View	
+			//Return View
 			return \View::make('dashboard.tasks.edit')
 						->with('task', $data[0])
 						->with('projects',$projects)
@@ -358,7 +358,7 @@ class TaskController extends \BaseController{
 	{
 
 		//Get all the data
-		$data = \Input::json()->all();	
+		$data = \Input::json()->all();
 		//Get the user id of the currently logged in user
 		$userId = Sentry::getUser()->id;
 		$result = $this->tasks->updateTask($data, $userId);
@@ -455,6 +455,3 @@ class TaskController extends \BaseController{
 	}
 
 }
-
-
-

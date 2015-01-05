@@ -75,17 +75,17 @@
                     <div class="span2 task_title_left"><input type="checkbox" id={{$task['id']}} value={{$task['id']}}  class="regular-checkbox" style="position:relative; left:5px;" /><label class="taskCheck" for={{$task['id']}}></label></div>
                     <div class="span10 task_title_link"><a href="{{url('/dashboard/tasks',array($task['id']))}}" id="taskname">{{$task['name']}} </a></div>
                   </div>
-                  @if($task['num_status'] == 0)
                   <div class="row-fluid task_no_main">
+                    <div>
+                      <div class="pull-right">
+                        {{new ExpressiveDate($task['end_date'])}}
+                      </div>
+                      {{new ExpressiveDate($task['start_date'])}}
+                    </div>
                     <div class="task_no_inner" id ="task_no_inner">{{sprintf("%02s", $task['num_status'])}}</div>
                     <p><a href="#">days remaining</a></p>
                   </div>
-                  @else
-                  <div class="row-fluid task_no_main">
-                    <div class="task_no_inner" id ="task_no_inner">{{sprintf("%02s", $task['num_status'])}}</div>
-                    <p><a href="#">days remaining</a></p>
-                  </div>
-                  @endif
+
                   <div class="row-fluid sub_task">
                     <p>Sub-tasks</p>
                     <div class="task_prog"> <div class="progress">
@@ -242,4 +242,3 @@ $(function() {
 </script>
 {{ HTML::script('assets/js/jquery/jquery.mixitup.js') }}
 @stop
-

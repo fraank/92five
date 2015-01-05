@@ -1,9 +1,9 @@
-<?php 
+<?php
 require_once(app_path().'/models/Subtask.php');
 use \Exception as Exception;
 use \SomeThingWentWrongException as SomeThingWentWrongException;
 /**
- * Task Repository.    
+ * Task Repository.
  * @version    1.0.0
  * @author     Chintan Banugaria
  * @copyright  (c) 2014, 92fiveapp
@@ -11,13 +11,13 @@ use \SomeThingWentWrongException as SomeThingWentWrongException;
  **/
 class TaskRepository implements TaskInterface{
 
-	public function all($userId)
+	public function all($userId, $order_by = 'name')
 	{
 		try
 		{
 			// Find all the tasks associated with userid
 			$data = null;
-	        $tasks = \User::find($userId)->tasks()->orderBy('name')->get()->toArray();
+	        $tasks = \User::find($userId)->tasks()->orderBy($order_by)->get()->toArray();
 			if(sizeof($tasks) == 0)
 			{
 				//If there are no tasks return Null
@@ -42,7 +42,7 @@ class TaskRepository implements TaskInterface{
 			\Log::error('Something went wrong in Task Repository - all():'.$e->getMessage());
 			throw new SomeThingWentWrongException();
 		}
-	}	
+	}
 	public function getProjectTasks($projectId, $userId)
 	{
 		try
@@ -67,7 +67,7 @@ class TaskRepository implements TaskInterface{
 			 	}
 			 	elseif($tempuser->inGroup($user))
 			 	{
-			 	
+
 			 		$tasksId = \Taskcollabs::where('user_id', $userId)->lists('task_id');
 			 		$tasks = \Task::whereIn('id', $tasksId)->where('project_id', $projectId)->get()->toArray();
 			 		$data = $this->makeTasks($tasks);
@@ -81,7 +81,7 @@ class TaskRepository implements TaskInterface{
 			else
 			{
 				throw new \NotAuthorizedForProject();
-				
+
 			}
 		}
 		catch(\NotAuthorizedForProject $e)
@@ -91,9 +91,9 @@ class TaskRepository implements TaskInterface{
 		catch(Exception $e)
 		{
 			\Log::error('Something Went Wrong in Task Repository - getProjectTasks():'. $e->getMessage());
-			throw new SomeThingWentWrongException();	
+			throw new SomeThingWentWrongException();
 		}
-		
+
 	}
 
 	public function makeTasks($tasks)
@@ -143,7 +143,7 @@ class TaskRepository implements TaskInterface{
 						$task['num_status'] = 'Active';
 					}
 				}
-				
+
 				if($task['project_id'] == null)
 				{
 					$task['project_name'] = null;
@@ -167,7 +167,7 @@ class TaskRepository implements TaskInterface{
 					$task ['rem_subtasks'] =   $subtasks = \Task::find($task['id'])->subtasks()->where('status', '=', 'active')->orWhere('status','=','delayed')->get()->count();
 					$task['subTaskPercentage'] = (int)(($task ['totalsubtasks'] - $task ['rem_subtasks'])*100)/$task ['totalsubtasks'];
 				}
-				
+
 				$task['users'] = \Task::find($task['id'])->users()->orderBy('first_name')->get()->toArray();
 				$task['files'] = \Fileref::where('parent_id','=',$task['id'])->where('parent_type','=','task')->get()->count();
 				$data[] = $task;
@@ -188,7 +188,7 @@ class TaskRepository implements TaskInterface{
 		try
 		{
 			$task = \Task::findOrFail($data['id']);
-		
+
 			if($data['status'] == 'completed')
 			{
 				$task->status = 'completed';
@@ -240,11 +240,11 @@ class TaskRepository implements TaskInterface{
             $tempEndDate = \DateTime::createFromFormat('j F, Y',$data['enddate']);
             $task->start_date = $tempStartDate->format('Y-m-d');
 			$task->end_date = $tempEndDate->format('Y-m-d');
-           
+
 			$task->updated_by = (int) $createdUserId;
 			$task->save();
 			$taskId = $task->id;
-			foreach ($usersId as $userId) 
+			foreach ($usersId as $userId)
 			{
 				$taskCollabs = new \Taskcollabs;
 				$taskCollabs->task_id = $taskId;
@@ -254,7 +254,7 @@ class TaskRepository implements TaskInterface{
 			}
 			$result['status'] = 'success';
 			$result['id'] = $taskId;
-			return $result;	
+			return $result;
 		}
 		catch(Exception $e)
 		{
@@ -285,7 +285,7 @@ class TaskRepository implements TaskInterface{
 			$result['status'] = 'error';
 			return $result;
 		}
-	
+
 	}
 
 	public function deleteSubTask($id)
@@ -306,9 +306,9 @@ class TaskRepository implements TaskInterface{
 
 	public function checkPermission($taskId, $userId)
 	{
-		try 
+		try
 		{
-					
+
 			$createdUserId = \Task::where('id','=',$taskId)->pluck('updated_by');
 			if($createdUserId == $userId)
 			{
@@ -350,8 +350,8 @@ class TaskRepository implements TaskInterface{
 						 }
 					}
 			}
-		} 
-		catch (Exception $e) 
+		}
+		catch (Exception $e)
 		{
 			\Log::error('Something Went Wrong - Task Repository - checkPermission():'.$e->getMessage());
 			return 'error';
@@ -359,7 +359,7 @@ class TaskRepository implements TaskInterface{
 	}
 	public function viewTask($taskId)
 	{
-		try 
+		try
 		{
 			$task = \Task::where('id','=',$taskId)->get()->toArray();
 			$data = $this->makeTasks($task);
@@ -368,9 +368,9 @@ class TaskRepository implements TaskInterface{
 			{
 				$files = null;
 			}
-			
+
 			else
-			{	
+			{
 				$filesJson = \Files::whereIn('id',$filesId)->get(array('file_name','file_sys_ref','key','size','uploaded_date','uploaded_by'))->toArray();
 				$files = $filesJson;
 			}
@@ -440,7 +440,7 @@ class TaskRepository implements TaskInterface{
 
 			$result['status'] = 'success';
 			$result['id'] = $task->id;
-			return $result;	
+			return $result;
 
 		}
 		catch(Exception $e)
@@ -464,7 +464,7 @@ class TaskRepository implements TaskInterface{
 				$files = null;
 			}
 			else
-			{	
+			{
 				$files = \Files::whereIn('id',$filesId)->get(array('file_name','id','key','size','uploaded_date','uploaded_by'))->toArray();
 				//$files = $filesJson;
 			}
