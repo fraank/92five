@@ -4,12 +4,14 @@ Additional Features:
 
 * german language
 * "allday" Events for the calendar
+* editable calendar-categories
 
 
 Bugfixes:
 
 * full migration support (basic run needs no installation)
 * replaced hard strings with translated content
+* full debug mode with output
 
 
 Before proceeding to installation please make sure that your server meets the minimum server requirements:
