@@ -7,7 +7,9 @@
   <div class="main_content">
     <div class="row-fluid">
       <div class="span12 project_detail">
-        <div class="monthly_title">Monthly Report for {{$name}} generated on {{App::make('date')}}</div>
+        <div class="monthly_title">
+          Monthly Report for {{ $name }} generated on {{App::make('date')}}
+        </div>
         <div class="row-fluid monthly_detail_1">
           <div class="span5 report-summay monthly_calender cal2">
             <script type="text/template" id="template-calendar">

@@ -5,6 +5,7 @@ Additional Features:
 * german language
 * "allday" Events for the calendar
 * editable calendar-categories
+* full monthly report for a specific user
 
 
 Bugfixes:

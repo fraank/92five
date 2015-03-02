@@ -32,9 +32,17 @@ class ReportController extends \BaseController{
 	 	$tasks = $this->report->getTasks($userId);
 	 	//Get Projects for the user
 	 	$projects = $this->report->getProjects($userId);
-	   	return \View::make('dashboard.reports.index')
-	    					->with('tasks',$tasks)
-	    					->with('projects',$projects);
+		
+		if(Sentry::getUser()->inGroup(Sentry::getGroupProvider()->findByName('admin'))) {
+			$users = \User::all();
+		}
+		else {
+			$users = false;
+		}
+	  return \View::make('dashboard.reports.index')
+			->with('users', $users)
+			->with('tasks', $tasks)
+			->with('projects', $projects);
 	}
 	/**
 	*  Get the weekly report of the user
@@ -150,8 +158,14 @@ class ReportController extends \BaseController{
 	*/
 	public function postMonthly()
 	{
-		//Get the user id of the currently logged in user
-		$userId = Sentry::getUser()->id;
+		
+		//Get the user
+		if(\Input::get('user_id') != "" && \Sentry::getUser()->inGroup(\Sentry::getGroupProvider()->findByName('admin')))
+			$user = \User::find(\Input::get('user_id'));
+		else
+			$user = \Sentry::getUser();
+		$userId =  $user->id;
+		
 		//Get the selected date of the month
 		$selectedMonth = \Input::get('monthall_submit');
 		//Generate month from the selected date
@@ -164,11 +178,10 @@ class ReportController extends \BaseController{
 		$month = $tempDate->getMonth();
 		$totalNoOfDays = (int)$tempDate->getDaysInMonth();
 		$allmonths = array(1 =>'January','February','March','April','May','June','July','August','September','October','November','December');
-		$firstName = Sentry::getUser()->first_name;
-		$lastName = Sentry::getUser()->last_name;
 		return \View::make('dashboard.reports.monthlyall')
+						->with('user', $user)
 						->with('totalDays',$totalNoOfDays)
-						->with('name',$firstName.$lastName)
+						->with('name', $user->fullName())
 						->with('dates',$daysArray)
 						->with('year',(int)$year)
 						->with('month',$allmonths[(int)$month])
