@@ -28,16 +28,21 @@ class TimesheetController extends \BaseController{
 	{
 		
 		//Get the user id of the currently logged in user
-        $userId =  Sentry::getUser()->id;
-        //Current Date
+    $userId =  Sentry::getUser()->id;
+   	
+   	//Current Date
 		$day = date("Y-m-d");
-        //Get tasks list for the user
+    //Get tasks list for the user
 		$tasks = $this->timesheet->getIndex($userId);
-        //Get the entries
+    //Get the entries
 		$entries = $this->timesheet->getEntries($day,$userId);
-        //Current Week
+		// Get count for this month
+		$count_entries_month = $this->timesheet->getTimeForEntriesOfMonth(date("m"),$userId);
+
+    //Current Week
 		$week = $this->timesheet->getWeek($day);
 		return \View::make('dashboard.timesheet.view')
+						->with('timeForEntriesOfMonth', $count_entries_month)
 						->with('week',$week)
 						->with('selectedDate',$day)
 						->with('entries', $entries)
@@ -130,6 +135,7 @@ class TimesheetController extends \BaseController{
 		$tasks = $this->timesheet->getIndex($userId);
 		//Get Entries
 		$entries = $this->timesheet->getEntries($dateSubmit,$userId);
+
 		return \View::make('dashboard.timesheet.view')
 					->with('week',$week)
 					->with('tasks',$tasks)

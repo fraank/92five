@@ -12,6 +12,8 @@ interface TimesheetInterface{
 		public function getIndex($userId);
 		//Add Timesheet Entry
 		public function addEntry($data, $userId);
+		//get count of worktime for a particular month and for UserId
+		public function getTimeForEntriesOfMonth($month, $userId);
 		//Get Timesheet Entries for a particular day and for UserId
 		public function getEntries($day,$userId);
 		//Delete Timesheet Entry

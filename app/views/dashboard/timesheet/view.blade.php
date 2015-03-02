@@ -28,21 +28,21 @@
               <div class="jcarousel">
                 <ul>
                   @foreach ($week as $day)
-                  @if($day['date'] == $selectedDate)
-                  <li class="{{$day['class']}} c_select" id="">
-                    <span class="c_day">{{$day['dayofweek']}}</span>
-                    <span class="c_date">{{$day['day']}}</span>
-                    <span class="c_month">{{$day['month']}}</span>
-                    <span class="c_year">{{$day['year']}}</span>
-                  </li>
-                  @else
-                  <li class={{$day['class']}} id="">
-                    <span class="c_day">{{$day['dayofweek']}}</span>
-                    <span class="c_date">{{$day['day']}}</span>
-                    <span class="c_month">{{$day['month']}}</span>
-                    <span class="c_year">{{$day['year']}}</span>
-                  </li>
-                  @endif
+                    @if($day['date'] == $selectedDate)
+                    <li class="{{$day['class']}} c_select" id="">
+                      <span class="c_day">{{$day['dayofweek']}}</span>
+                      <span class="c_date">{{$day['day']}}</span>
+                      <span class="c_month">{{$day['month']}}</span>
+                      <span class="c_year">{{$day['year']}}</span>
+                    </li>
+                    @else
+                    <li class={{$day['class']}} id="">
+                      <span class="c_day">{{$day['dayofweek']}}</span>
+                      <span class="c_date">{{$day['day']}}</span>
+                      <span class="c_month">{{$day['month']}}</span>
+                      <span class="c_year">{{$day['year']}}</span>
+                    </li>
+                    @endif
                   @endforeach
                 </ul>
               </div>
@@ -52,7 +52,10 @@
             </div>
           </div>
         </div>
-        <div class="timesheet-detail-title" id="timesheet-detail-title">Entries showing for {{ new ExpressiveDate($selectedDate)}}</div>
+        <div class="timesheet-detail-title" id="timesheet-detail-title">
+          Entries showing for {{ new ExpressiveDate($selectedDate)}}
+          - you have {{ gmdate("H", ($timeForEntriesOfMonth*60)) }} hours and {{ gmdate("i", ($timeForEntriesOfMonth*60)) }} minutes this month on worktime!
+        </div>
         <div class="row-fluid timesheet-detail" id="timesheet-detail">
           <!-- Box 1 -->
           @if($entries != null)

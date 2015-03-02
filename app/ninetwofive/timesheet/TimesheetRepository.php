@@ -70,6 +70,17 @@ class TimesheetRepository implements TimesheetInterface{
 			throw new SomeThingWentWrongException();
 		}
 	}
+
+	public function getTimeForEntriesOfMonth($month, $userId)
+	{
+		$count = 0;
+		$tempEntries = Timesheet::where(DB::raw('MONTH(date)'), '=' ,$month)->where('user_id',$userId)->get()->toArray();
+		foreach($tempEntries as $entry) {
+			$count = $count + (($entry['total_hours'] * 60) + $entry['total_minutes']);
+		}
+		return $count;
+	}
+
 	public function getEntries($day, $userId)
 	{
 		try
