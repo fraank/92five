@@ -1,4 +1,4 @@
-@extends('dashboard.default')
+@extends('dashboard.layouts.default')
 @section('head')
 <title>92five app - Add User</title>
 @stop

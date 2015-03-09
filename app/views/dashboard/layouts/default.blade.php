@@ -15,6 +15,7 @@
 {{ HTML::style('assets/css/dashboard/sidebar.css') }}
 {{ HTML::style('assets/css/notifications/iosOverlay.css') }}
 {{ HTML::style('assets/css/dashboard/tooltipster.css') }}
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <!-- JS -->
 {{ HTML::script('assets/js/jquery/jquery-1.9.1.min.js') }}
 {{ HTML::script('assets/js/bootstrap/bootstrap.min.js') }}
@@ -29,15 +30,18 @@
 {{ HTML::script('assets/js/notifications/iosOverlay.js') }}
 </head>
 <body class="project_bg">
-<!-- Section -->
-<section>
-  <!-- main content -->
+
+<div id="wrapper" class="">  
+  
+  <div id="sidebar-wrapper">
+    @include('dashboard.layouts.sidebar')
+  </div>
+  <div id="content-wrapper">
     @yield('content')
-  <!-- sidebar starts -->
-  @include('dashboard.layouts.sidebar')
-  <!-- sidebar ends -->
-</section>
-<!-- Section -->
+  </div>
+
+</div>
+
 @yield('endjs')
 {{ HTML::script('assets/js/dashboard/retina.min.js') }}
 

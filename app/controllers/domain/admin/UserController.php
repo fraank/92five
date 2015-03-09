@@ -16,6 +16,14 @@ class UserController extends \BaseController{
 	{
 		$this->user = \App::make('UserInterface');
 	}
+
+    public function getRoles()
+    {
+        //Get all data
+        $data = $this->user->getAllUsersData();
+        return \View::make('dashboard.users.roles');
+    }
+
 	/**
      * Get all users
      * @return View

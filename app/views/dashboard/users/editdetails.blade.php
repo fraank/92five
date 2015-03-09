@@ -1,4 +1,4 @@
-@extends('dashboard.default')
+@extends('dashboard.layouts.default')
 @section('head')
 <title>92five app - Edit Profile</title>
 @stop

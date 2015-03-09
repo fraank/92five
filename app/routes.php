@@ -92,9 +92,7 @@ Route::group(array('prefix'=>'dashboard','before'=>'auth'),function()
 				 	Route::delete('todo/{id?}','Controllers\Domain\Dashboard\TodoController@deleteTodos');
 
 				}
-				Route::get('roles',function(){
-					return View::make('dashboard.roles');
-				});
+				
 				Route::get('projects','Controllers\Domain\Dashboard\ProjectController@getIndex');
 				Route::get('Projects','Controllers\Domain\Dashboard\ProjectController@getIndex');
 				Route::get('projects/{id}','Controllers\Domain\Dashboard\ProjectController@getViewProject')->where('id', '[0-9]+');
@@ -191,6 +189,7 @@ Route::group(array('prefix'=>'dashboard','before'=>'auth'),function()
 				 	{
 				 		Route::put('/users/manage/{id?}','Controllers\Domain\Admin\UserController@manageUsers');
 				 	}
+					Route::get('/roles','Controllers\Domain\Admin\UserController@getRoles');
 				 	Route::get('/users/roles/{id?}','Controllers\Domain\Admin\UserController@getChangeRole');
 				 	Route::post('/users/roles','Controllers\Domain\Admin\UserController@postChangeRole');
 				 	Route::post('/users/delete','Controllers\Domain\Admin\UserController@deleteUser');

@@ -1,4 +1,4 @@
-@extends('dashboard.default')
+@extends('dashboard.layouts.default')
 @section('head')
 <title>92five app - User</title>
 @stop
@@ -15,6 +15,7 @@
               <a class="add_project" href="{{url('dashboard/me/editmydetails')}}">Edit Details</a>
               <a class="add_project" href="{{url('dashboard/me/changemyemail')}}">Change Email</a>
               <a class="add_project" href="{{url('dashboard/me/changemypassword')}}">Change Password</a>
+              <a class="user_delete" href="{{URL::to('/logout')}}">Logout</a></li>
               @endif
             </div>
           </div>

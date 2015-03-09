@@ -1,4 +1,4 @@
-@extends('dashboard.default')
+@extends('dashboard.layouts.default')
 @section('head')
 <title>92five app - My Weekly Project Report</title>
 @stop

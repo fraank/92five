@@ -1,4 +1,4 @@
-@extends('dashboard.default')
+@extends('dashboard.layouts.default')
 @section('head')
 <title>92five app - {{trans('92five.deleteRestoreData')}}</title>
 @stop

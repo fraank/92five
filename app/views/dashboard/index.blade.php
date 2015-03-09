@@ -1,4 +1,4 @@
-@extends('dashboard.default')
+@extends('dashboard.layouts.default')
 @section('head')
 <title>{{trans('92five.Dashboard')}}</title>
 @stop

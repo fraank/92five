@@ -1,53 +1,24 @@
 <div class="sidebar">
-  <div class="antiScroll">
-    <div class="antiscroll-inner">
-      <div class="antiscroll-content">
-        <div class="sidebar_inner">
-          <div class="login_info">
-            <div class="user_info_data"> <img src="{{url('assets/images/profilepics/')}}/{{Sentry::getUser()->id}}.png" class="user_image" alt="">
-              <h4>Hey {{Sentry::getUser()->first_name}}!</a></h4>
-              <span>
-                <a href="{{url('/dashboard/me')}}">Account</a> | 
-                <a href="{{URL::to('/logout')}}">Logout</a>
-              </span>
-            </div>
-          </div>
-          <div id="side_accordion" class="accordion">
-            <div class="accordion-group none_accrodion">
-              <div class="accordion-heading"> <a href="{{url('/dashboard')}}"> <span class="accrod_icon"><img src="{{asset('assets/images/dashboard/dashboard.png')}}" alt=""></span>{{trans('92five.Dashboard')}} </a> </div>
-            </div>
-
-            <div class="accordion-group none_accrodion">
-              <div class="accordion-heading"> <a href="{{url('/dashboard/projects')}}"> <span class="accrod_icon"><img src="{{asset('assets/images/dashboard/projects.png')}}" alt=""></span>{{trans('92five.Projects')}} </a> </div>
-            </div>
-            <div class="accordion-group none_accrodion">
-              <div class="accordion-heading"> <a href="{{url('/dashboard/tasks')}}"> <span class="accrod_icon"><img src="{{asset('assets/images/dashboard/task.png')}}" alt=""></span>{{trans('92five.Tasks')}} </a> </div>
-            </div>
-            <div class="accordion-group none_accrodion">
-              <div class="accordion-heading"> <a href="{{url('/dashboard/calendar')}}"> <span class="accrod_icon"><img src="{{asset('assets/images/dashboard/calendar.png')}}" alt=""></span>{{trans('92five.Calendar')}} </a> </div>
-            </div>
-            <div class="accordion-group none_accrodion">
-              <div class="accordion-heading"> <a href="{{url('/dashboard/timesheet')}}"> <span class="accrod_icon"><img src="{{asset('assets/images/dashboard/timesheet.png')}}" alt=""></span>{{trans('92five.Timesheet')}} </a> </div>
-            </div>
-            <div class="accordion-group bdr_none1">
-              <div class="accordion-heading none_accrodion"> <a href="{{url('/dashboard/mytodos')}}"> <span class="accrod_icon"><img src="{{asset('assets/images/dashboard/notes.png')}}" alt=""></span>{{trans('92five.My To-dos')}} </a> </div>
-            </div>
-          </div>
-          <div id="side_accordion" class="accordion">
-            @if(Sentry::getUser()->inGroup(Sentry::getGroupProvider()->findByName('admin')))
-            <div class="accordion-group bdr_none1">
-              <div class="accordion-heading none_accrodion"> <a href="{{url('/dashboard/admin')}}"> <span class="accrod_icon"><img src="{{asset('assets/images/dashboard/users.png')}}" alt=""></span>{{trans('92five.Admin')}} </a> </div>
-            </div>
-            @endif
-            <div class="accordion-group bdr_none1">
-              <div class="accordion-heading none_accrodion"> <a href="{{url('/dashboard/roles')}}"> <span class="accrod_icon"><img src="{{asset('assets/images/dashboard/roles.png')}}" alt=""></span>{{trans('92five.Roles')}} </a> </div>
-            </div>
-            <div class="accordion-group bdr_none1">
-              <div class="accordion-heading none_accrodion"> <a href="{{url('/dashboard/reports')}}"> <span class="accrod_icon"><img src="{{asset('assets/images/dashboard/reports.png')}}" alt=""></span>{{trans('92five.Reports')}} </a> </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  
+  <div class="user">
+    <a href="{{url('/dashboard/me')}}"><i class="fa fa-user"></i> {{Sentry::getUser()->first_name}}</a>
   </div>
+
+  <ul class="nav nav-pills nav-stacked">
+    @foreach ($sidebar as $item)
+      @if (is_array($item))
+        <li class="{{ $item['class'] }}">
+          <a href="{{ $item['link'] }}">
+            <i class="{{ $item['icon'] }}"></i>
+            <span>
+              {{ $item['name'] }}
+            </span>
+          </a>
+        </li>
+      @else
+        <li class="separator"></li>
+      @endif
+    @endforeach
+  </ul>
+  
 </div>
