@@ -62,6 +62,7 @@ Route::post('/auth/updatepassword', 'AuthController@authUpdatePassword');
 Route::get('/auth/activateuser', 'AuthController@authActivateUser');
 Route::post('/auth/createuser', 'AuthController@authCreateUser');
 Route::get('/auth/verifyemail','AuthController@authVerifyEmail');
+
 Route::group(array('prefix'=>'dashboard','before'=>'auth'),function()
 {
 
@@ -84,13 +85,13 @@ Route::group(array('prefix'=>'dashboard','before'=>'auth'),function()
 				 	Route::post('/tasks/edit/update', 'Controllers\Domain\Dashboard\TaskController@postEditTask');
 				 	Route::get('/tasks/edit/add/files/deletefile/{id}','Controllers\Domain\Dashboard\DashboardController@getDeleteFile');
 				 	Route::get('/calendar/events/{id?}','Controllers\Domain\Dashboard\CalendarController@getEvents');
+				 	
 				 	/***TimeSheet***/
 				 	Route::get('timesheet/entry/{day?}', 'Controllers\Domain\Dashboard\TimesheetController@getEntries');
 				 	Route::get('todo','Controllers\Domain\Dashboard\TodoController@getTodos');
 				 	Route::put('/todo/{id?}', 'Controllers\Domain\Dashboard\TodoController@putTodos');
 				 	Route::post('todo','Controllers\Domain\Dashboard\TodoController@postTodos');
 				 	Route::delete('todo/{id?}','Controllers\Domain\Dashboard\TodoController@deleteTodos');
-
 				}
 				
 				Route::get('projects','Controllers\Domain\Dashboard\ProjectController@getIndex');
@@ -208,8 +209,9 @@ Route::group(array('prefix'=>'dashboard','before'=>'auth'),function()
 				 	Route::post('/data/restore','Controllers\Domain\Admin\DataController@restoreSingleEntity');
 
 				});
-                Route::get('credits',function(){
-                    return View::make('dashboard.credits');
-                });
+
+    Route::get('credits',function(){
+        return View::make('dashboard.credits');
+    });
 
  });

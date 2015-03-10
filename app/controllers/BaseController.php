@@ -59,6 +59,7 @@ class BaseController extends Controller {
         'icon' => 'fa fa-check-square-o'
       )
     );
+    
     // arrach Admin
     if(Sentry::getUser() && Sentry::getUser()->inGroup(Sentry::getGroupProvider()->findByName('admin')))
     {
@@ -81,11 +82,11 @@ class BaseController extends Controller {
         'link' => url('/dashboard/reports'),
         'icon' => 'fa fa-dashboard'
       );
-      View::share(array(
-        'sidebar' => $sidebar
-      ));
     }
-
+    View::share(array(
+      'sidebar' => $sidebar
+    ));
+    
   }
 
 }

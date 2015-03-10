@@ -65,15 +65,31 @@ class CalendarRepository implements CalendarInterface{
 		}
 
 	}
-	public function getEvents($userId, $day)
+	public function getEvents($userId, $day, $public_events = true)
 	{
 		try
 		{
 			$finalevents = array();
+			
 			$eventsId = \EventUser::where('user_id',$userId)->lists('events_id');
-			if(sizeof($eventsId) != 0)
-			{
-			$events = \Events::whereIn('id',$eventsId)->where('date',$day)->orderBy('start_time')->get(array('id','title','start_time','end_time','calendar_category_id','notes','location','updated_by', 'allday'))->toArray();
+			
+			if($public_events)
+				$calendar_category_ids = \CalendarCategory::where('public_content',true)->lists('id');
+			else
+				$calendar_category_ids = array();
+
+			$events = \Events::where('date', $day)
+			->where(function($orQuery) use ($eventsId, $calendar_category_ids){
+
+        if(count($eventsId) > 0)
+        	$orQuery->whereIn('id',$eventsId);
+        if(count($calendar_category_ids) > 0)
+        	$orQuery->orWhereIn('calendar_category_id', $calendar_category_ids);
+      })
+      ->orderBy('start_time')
+      ->get(array('id','title','start_time','end_time','calendar_category_id','notes','location','updated_by', 'allday'))
+      ->toArray();
+
 			foreach ($events as $event) {
 
 				$users = \Events::find($event['id'])->users()->orderBy('first_name')->get()->toArray();
@@ -92,11 +108,7 @@ class CalendarRepository implements CalendarInterface{
 
 			//Log::info(json_encode($finalevents));
 			return $finalevents;
-			}
-			else
-			{
-				return null;
-			}
+
 		}
 		catch(Exception $e)
 		{
@@ -123,20 +135,26 @@ class CalendarRepository implements CalendarInterface{
 			\Log::error("Something Went Wrong in Calendar Repository - checkPermission():".$e->getMessage());
 		}
 	}
-	public function getEventDates($userId)
+	public function getEventDates($userId, $public_events = true)
 	{
+		// old one
+		// $eventDates =  \Events::whereIn('id',$eventsId)->get(array('date'))->toJson();
 
 		$eventsId = \EventUser::where('user_id',$userId)->lists('events_id');
-		if(sizeof($eventsId) !=0)
-		{
-		$eventDates =  \Events::whereIn('id',$eventsId)->get(array('date'))->toJson();
-		return $eventDates;
-		}
-		else
-		{
-			return json_encode([]);
-		}
 
+		if($public_events)
+			$calendar_category_ids = \CalendarCategory::where('public_content',true)->lists('id');
+		else
+			$calendar_category_ids = array();
+
+		$eventDates = \Events::where(function($orQuery) use ($eventsId, $calendar_category_ids){
+	      if(count($eventsId) > 0)
+	      	$orQuery->whereIn('id',$eventsId);
+	      if(count($calendar_category_ids) > 0)
+	      	$orQuery->orWhereIn('calendar_category_id', $calendar_category_ids);
+	    })
+	    ->get(array('date'))->toJson();
+			return $eventDates;
 	}
 
 	public function getEvent($id)
