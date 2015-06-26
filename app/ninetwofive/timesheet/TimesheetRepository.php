@@ -1,8 +1,8 @@
-<?php 
+<?php
 use \Timesheet as Timesheet;
 use \SomeThingWentWrongException as SomeThingWentWrongException;
 /**
- * Timesheet Repository.    
+ * Timesheet Repository.
  * @version    1.0.0
  * @author     Chintan Banugaria
  * @copyright  (c) 2014, 92fiveapp
@@ -17,7 +17,7 @@ class TimesheetRepository implements TimesheetInterface{
 		$tasks = \User::find($userId)->tasks()->orderBy('name')->get()->toArray();
 		return $tasks;
 	}
-	
+
 	public function addEntry($data, $userId)
 	{	try
 		{
@@ -71,6 +71,7 @@ class TimesheetRepository implements TimesheetInterface{
 		}
 	}
 
+	// returns minutes-sum
 	public function getTimeForEntriesOfMonth($month, $userId)
 	{
 		$count = 0;
@@ -81,6 +82,31 @@ class TimesheetRepository implements TimesheetInterface{
 		return $count;
 	}
 
+	// returns minutes and hours as array
+	public function getTimeForEntriesOfMonthAsArray($month, $userId)
+	{
+		$totalTimeSpent = 0;
+		$daysArray = \DateAndTime::getMonthDates($month);
+
+		foreach ($daysArray as $date)
+		{
+			//Get all entries
+			$tempData  = Timesheet::where('date',$date)->where('user_id',$userId)->get()->toArray();
+			//Temp Variable
+			$newTempData = array();
+			foreach($tempData as $entry)
+			{
+				//Calculate Total Time
+				$totalTimeSpent = $totalTimeSpent + $entry['total_time_spent'];
+			}
+		}
+		//Convert total time to hours and mins
+		$tempTotalTime = \DateAndTime::convertTime($totalTimeSpent);
+		$returnData['hours'] = $tempTotalTime['hours'];
+		$returnData['mins'] = $tempTotalTime['mins'];
+		return $returnData;
+	}
+
 	public function getEntries($day, $userId)
 	{
 		try
@@ -89,9 +115,9 @@ class TimesheetRepository implements TimesheetInterface{
 				$tempEntries = Timesheet::where('date',$day)->where('user_id',$userId)->get()->toArray();
 				$finalEntries = array();
 				//Get Task Name
-				foreach ($tempEntries as $entry) 
+				foreach ($tempEntries as $entry)
 				{
-				
+
 					if($entry['task_id'] != null)
 					{
 						$entry['task'] = \Task::find($entry['task_id'])->toArray();
@@ -101,7 +127,7 @@ class TimesheetRepository implements TimesheetInterface{
 					{
 						$entry['task'] = null;
 					}
-					
+
 					$finalEntries[] = $entry;
 				}
 				return $finalEntries;
@@ -124,7 +150,7 @@ class TimesheetRepository implements TimesheetInterface{
 			\Log::error('Something Went Wrong in Timesheet Repository - deleteEntry():'. $e->getMessage());
 			throw new SomeThingWentWrongException();
 		}
-		
+
 	}
 	public function getWeek($date)
 	{
@@ -158,8 +184,8 @@ class TimesheetRepository implements TimesheetInterface{
 	public function convertTime($startTime,$endTime)
 	{
 				$data= array();
-				$time1 = strtotime($startTime);  
-				$time2 = strtotime($endTime);  
+				$time1 = strtotime($startTime);
+				$time2 = strtotime($endTime);
 				$result = ($time2 - $time1);
 				if($result < 0)
 				{
@@ -188,8 +214,8 @@ class TimesheetRepository implements TimesheetInterface{
 	{
 		try
 		{
-		
-            
+
+
 					$entry = \Timesheet::find($data['entryid']);
 					$entry->title = $data['title'];
                     $tempDate =\DateTime::createFromFormat('j F, Y',$data['date']);
@@ -210,7 +236,7 @@ class TimesheetRepository implements TimesheetInterface{
 							$entry->total_hours = $result['hours'];
 							$entry->total_minutes = $result['mins'];
 							$entry->start_time = $data['starttime_submit'];
-							
+
 					}
 					else if($data['endtime_submit'] != '')
 					{

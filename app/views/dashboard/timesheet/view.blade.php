@@ -54,7 +54,7 @@
         </div>
         <div class="timesheet-detail-title" id="timesheet-detail-title">
           Entries showing for {{ new ExpressiveDate($selectedDate)}}
-          - you have {{ gmdate("H", ($timeForEntriesOfMonth*60)) }} hours and {{ gmdate("i", ($timeForEntriesOfMonth*60)) }} minutes this month on worktime!
+          - you have {{$timeForEntriesOfMonth['hours']}} hours and {{$timeForEntriesOfMonth['mins']}} minutes this month on worktime!
         </div>
         <div class="row-fluid timesheet-detail" id="timesheet-detail">
           <!-- Box 1 -->
@@ -279,7 +279,7 @@ $(document).ready( function() {
 <script>
 $(document).ready(function() {
     var calendars = {};
-    function weeksInMonth(month) 
+    function weeksInMonth(month)
     {
       return Math.floor((month.daysInMonth() + moment(month).startOf('month').weekday()) / 7);
     }
@@ -369,4 +369,3 @@ $(document).ready(function() {
   });
 </script>
   @stop
-

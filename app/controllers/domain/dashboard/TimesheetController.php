@@ -2,7 +2,7 @@
 use Cartalyst\Sentry\Facades\Laravel\Sentry as Sentry;
 
 /**
- * Timesheet Controller.    
+ * Timesheet Controller.
  * @version    1.0.0
  * @author     Chintan Banugaria
  * @copyright  (c) 2014, 92fiveapp
@@ -26,10 +26,10 @@ class TimesheetController extends \BaseController{
 	*/
 	public function getIndex()
 	{
-		
+
 		//Get the user id of the currently logged in user
     $userId =  Sentry::getUser()->id;
-   	
+
    	//Current Date
 		$day = date("Y-m-d");
     //Get tasks list for the user
@@ -37,7 +37,7 @@ class TimesheetController extends \BaseController{
     //Get the entries
 		$entries = $this->timesheet->getEntries($day,$userId);
 		// Get count for this month
-		$count_entries_month = $this->timesheet->getTimeForEntriesOfMonth(date("m"),$userId);
+		$count_entries_month = $this->timesheet->getTimeForEntriesOfMonthAsArray(date("Y-m"),$userId);
 
     //Current Week
 		$week = $this->timesheet->getWeek($day);
@@ -53,7 +53,7 @@ class TimesheetController extends \BaseController{
 	*	@param Date
 	*	@return JSON
 	*/
-    
+
 	public function getEntries($day)
 	{
 		//Get the user id of the currently logged in user
@@ -93,7 +93,7 @@ class TimesheetController extends \BaseController{
 	*/
 	public function deleteEntry()
 	{
-		//Get Entry Id 
+		//Get Entry Id
 		$entryId = \Input::get('entryId');
 		//Get the user id of the currently logged in user
 		$userId =  \Sentry::getUser()->id;
